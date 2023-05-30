@@ -216,7 +216,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7388481680703091131, guid: 668e924ea91072e4981f51b0cc19b178, type: 3}
       propertyPath: m_Name
-      value: Cube
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7388481680703091135, guid: 668e924ea91072e4981f51b0cc19b178, type: 3}
       propertyPath: m_RootOrder
@@ -224,11 +224,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7388481680703091135, guid: 668e924ea91072e4981f51b0cc19b178, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.45
+      value: 9.51
       objectReference: {fileID: 0}
     - target: {fileID: 7388481680703091135, guid: 668e924ea91072e4981f51b0cc19b178, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.42
+      value: -4.48
       objectReference: {fileID: 0}
     - target: {fileID: 7388481680703091135, guid: 668e924ea91072e4981f51b0cc19b178, type: 3}
       propertyPath: m_LocalPosition.z
