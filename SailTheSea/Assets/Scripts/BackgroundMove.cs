@@ -23,7 +23,7 @@ public class BackgroundMove : MonoBehaviour
         }
         if (time > 30f)
         {
-            speed += 0.2f;
+            speed += 0.1f;
             time = 0f;
         }
     }
