@@ -4,28 +4,24 @@ using UnityEngine;
 
 public class BoatMovement : MonoBehaviour
 {
-    public float moveSpeed;
+    public float moveSpeed = 3f;
     public Rigidbody2D rb;
-    private Vector2 moveDirection;
+    public Animator animator;
+
+    Vector2 movement;
     // Update is called once per frame
     void Update()
     {
-        ProcessInputs();
-    }
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+    }
     void FixedUpdate()
     {
-        Move();
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
-    void ProcessInputs()
-    {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
 
-        moveDirection = new Vector2(moveX, moveY).normalized;
-    }
-    void Move()
-    {
-        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-    }
 }
