@@ -22,7 +22,7 @@ public class BoatMovement : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        moveDirection = new Vector2(moveX, moveY);
+        moveDirection = new Vector2(moveX, moveY).normalized;
     }
     void Move()
     {
