@@ -11,8 +11,8 @@ public class BoatMovement : MonoBehaviour
     //Dashing
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 200f;
-    private float dashingTime = 1f;
+    private float dashingPower = 6f;
+    private float dashingTime = 0.5f;
     private float dashingCooldown = 10f;
 
     [SerializeField] private TrailRenderer tr;
