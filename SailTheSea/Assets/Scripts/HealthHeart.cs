@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthSystem : MonoBehaviour
+public class HealthHeart : MonoBehaviour
 {
     public Sprite fullHeart, halfHeart, emptyHeart;
     Image heartImage;
+
     private void Awake()
     {
         heartImage = GetComponent<Image>();
@@ -25,16 +26,6 @@ public class HealthSystem : MonoBehaviour
                 heartImage.sprite = fullHeart;
                 break;
         }
-    }
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-
     }
 }
 public enum HeartStatus
