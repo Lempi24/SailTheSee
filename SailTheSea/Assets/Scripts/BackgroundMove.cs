@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundMove : MonoBehaviour
 {
-    public float speed = 4f, time = 0f;
+    public float speed = 1f, time = 0f;
     private Vector3 StartPosition;
 
     void Start()
@@ -18,10 +18,10 @@ public class BackgroundMove : MonoBehaviour
         time += Time.deltaTime;
         if (transform.position.y < -6.70512f)
         {
-            StartPosition.y = 6.95f;
+            StartPosition.y = 13.91f;
             transform.position = StartPosition;
         }
-        if (time > 30f)
+        if (time > 30f && speed < 12f)
         {
             speed += 0.1f;
             time = 0f;
