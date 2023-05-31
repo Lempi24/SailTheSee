@@ -11,7 +11,6 @@ public class BoatMovement : MonoBehaviour
     //Dashing
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 6f;
     private float dashingTime = 0.5f;
     private float dashingCooldown = 10f;
 
@@ -50,9 +49,10 @@ public class BoatMovement : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        moveSpeed = 4f;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
+        moveSpeed = 2f;
         rb.gravityScale = originalGravity;
         isDashing = false;
         tr.emitting = false;
