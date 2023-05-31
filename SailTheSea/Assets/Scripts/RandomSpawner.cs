@@ -6,7 +6,7 @@ public class RandomSpawner : MonoBehaviour
 {
     public Transform[] spawnPoints;
     public GameObject[] spawnPrefabs;
-    public float spawnInterval = 1f; // Czas miêdzy kolejnymi spawnami
+    public float spawnInterval = 1f; 
 
     private float timer = 0f;
 
