@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4446459938605028209}
   - component: {fileID: 4150212138172548859}
   - component: {fileID: 8366199388204562093}
+  - component: {fileID: 8042740303623506201}
   m_Layer: 0
   m_Name: Obstacle4
   m_TagString: Untagged
@@ -125,7 +126,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000000
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -146,3 +147,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72685fdcc81bf7b429c94d9516cbd78f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8042740303623506201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516230771253106400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c0e99d4f28cb345adfcb6c7c078eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5

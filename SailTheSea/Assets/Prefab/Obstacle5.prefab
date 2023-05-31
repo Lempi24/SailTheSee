@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4996426377448742350}
   - component: {fileID: 242300726651193509}
   - component: {fileID: 6269845455227651899}
+  - component: {fileID: 442580680377287897}
   m_Layer: 0
   m_Name: Obstacle5
   m_TagString: Untagged
@@ -99,7 +100,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000000
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -136,3 +137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72685fdcc81bf7b429c94d9516cbd78f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &442580680377287897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136186439199180970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c0e99d4f28cb345adfcb6c7c078eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
