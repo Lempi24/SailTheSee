@@ -55,7 +55,7 @@ public class HealthBar : MonoBehaviour
     
     public void ClearHearts()
     {
-        foreach (HealthHeart t in transform)
+        foreach (Transform t in transform)
         {
             Destroy(t.gameObject);
         }
