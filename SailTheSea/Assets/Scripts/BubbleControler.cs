@@ -6,23 +6,24 @@ public class BubbleControler : MonoBehaviour
 {
     public Transform player;
     private ParticleSystem particleSystem;
+    private Transform particleTransform;
 
     private void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();
+        particleTransform = transform;
     }
 
     private void LateUpdate()
     {
-        // Oblicz kierunek przeciwny do ruchu gracza
-        Vector2 direction = transform.position - player.position;
+       
+        Vector2 direction = player.position - particleTransform.position;
         direction.Normalize();
 
-        // Oblicz k¹t obrotu w stopniach
+        
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // Obróæ Particle System
-        var mainModule = particleSystem.main;
-        mainModule.startRotation = angle;
+        
+        particleTransform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 }
