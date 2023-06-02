@@ -8,6 +8,15 @@ public class BoatMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
+    //Shield
+    [SerializeField]
+    private GameObject shield;
+    private bool canActivateShield = true;
+    private bool isShieldActive = false;
+    private float shieldDuration = 5f;
+    private float shieldCooldown = 6f;
+
+    
     //Dashing
     private bool canDash = true;
     private bool isDashing;
@@ -16,10 +25,12 @@ public class BoatMovement : MonoBehaviour
 
     [SerializeField] private TrailRenderer tr;
 
-    Vector2 movement;
-    
+    Vector2 movement; 
+   
     void Update()
     {
+        CheckShield(); 
+
         if (isDashing) 
         {
             return;
@@ -38,6 +49,30 @@ public class BoatMovement : MonoBehaviour
             StartCoroutine(Dash());
         }
     }
+    
+           private void CheckShield()
+    {
+        if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive)
+        {
+            StartCoroutine(ActivateShield());
+        }
+    }
+
+    private IEnumerator ActivateShield()
+    {
+        canActivateShield = false;
+        shield.SetActive(true);
+        isShieldActive = true;
+
+        yield return new WaitForSeconds(shieldDuration);
+
+        shield.SetActive(false);
+        isShieldActive = false;
+
+        yield return new WaitForSeconds(shieldCooldown);
+        canActivateShield = true;
+    }
+
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
@@ -58,6 +93,5 @@ public class BoatMovement : MonoBehaviour
         tr.emitting = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
-    }
-
+    } 
 }
