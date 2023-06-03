@@ -35,27 +35,38 @@ public class BoatMovement : MonoBehaviour
         {
             return;
         }
-
+        
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
 
+       
+        if(!PauseMenu.isPaused)
+        {
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.magnitude);
-
+        }
+        
+        if(!PauseMenu.isPaused)
+        {
         if(Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
         {
             StartCoroutine(Dash());
         }
     }
+    }
     
            private void CheckShield()
     {
+        
+        if(!PauseMenu.isPaused)
+        {
         if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive)
         {
             StartCoroutine(ActivateShield());
         }
+    }
     }
 
     private IEnumerator ActivateShield()
