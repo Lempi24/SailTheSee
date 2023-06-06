@@ -9,7 +9,7 @@ public class BoatMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    //Shield
+    // Shield
     [SerializeField]
     private GameObject shield;
     private bool canActivateShield = true;
@@ -17,25 +17,34 @@ public class BoatMovement : MonoBehaviour
     private float shieldDuration = 5f;
     private float shieldCooldown = 6f;
 
-    
-    //Dashing
+    // Dashing
     private bool canDash = true;
     private bool isDashing;
     private float dashingTime = 0.5f;
     private float dashingCooldown = 10f;
 
-
-    //Slider
+    // Slider
     public Slider dashCooldownSlider;
     private float dashCooldownTimer = 0f;
+
+    public Slider shieldCooldownSlider;
+    private float shieldCooldownTimer = 0f;
+    private bool isCooldownInProgress = false;
+    private float cooldownFillSpeed = 1f;
+
     [SerializeField] private TrailRenderer tr;
 
-    Vector2 movement; 
-   
+    Vector2 movement;
+
+    void Start()
+    {
+        dashCooldownSlider.value = 1f;
+        shieldCooldownSlider.value = 1f;
+    }
+
     void Update()
     {
         CheckShield();
-
 
         if (isDashing)
         {
@@ -45,7 +54,6 @@ public class BoatMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
-
 
         if (!PauseMenu.isPaused)
         {
@@ -68,22 +76,31 @@ public class BoatMovement : MonoBehaviour
             dashCooldownTimer -= Time.deltaTime;
             dashCooldownSlider.value = 1f - (dashCooldownTimer / dashingCooldown);
         }
-    }
-            
-           private void CheckShield()
-    {
-        
-        if(!PauseMenu.isPaused)
+        if (isCooldownInProgress)
         {
-        if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive)
-        {
-            StartCoroutine(ActivateShield());
+            if (shieldCooldownTimer > 0f)
+            {
+                shieldCooldownTimer -= Time.deltaTime;
+                shieldCooldownSlider.value = shieldCooldownTimer / shieldCooldown;
+            }
+            else
+            {
+                isCooldownInProgress = false;
+                shieldCooldownTimer = 0f;
+                shieldCooldownSlider.value = 0f;
+            }
         }
     }
-    }
-    void Start()
+
+    private void CheckShield()
     {
-        dashCooldownSlider.value = 1f;
+        if (!PauseMenu.isPaused)
+        {
+            if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive)
+            {
+                StartCoroutine(ActivateShield());
+            }
+        }
     }
 
     private IEnumerator ActivateShield()
@@ -97,7 +114,22 @@ public class BoatMovement : MonoBehaviour
         shield.SetActive(false);
         isShieldActive = false;
 
-        yield return new WaitForSeconds(shieldCooldown);
+        isCooldownInProgress = true;
+        shieldCooldownTimer = shieldCooldown;
+        shieldCooldownSlider.value = 0f;
+
+        float timer = 0f;
+        while (timer < shieldCooldown)
+        {
+            timer += Time.deltaTime;
+            shieldCooldownSlider.value = timer / shieldCooldown;
+            yield return null;
+        }
+
+        isCooldownInProgress = false;
+        shieldCooldownTimer = 0f;
+        shieldCooldownSlider.value = 1f;
+
         canActivateShield = true;
     }
 
