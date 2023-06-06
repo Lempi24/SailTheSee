@@ -6,9 +6,18 @@ public class DamageOnCollision : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(3);
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+
+            // SprawdŸ, czy gracz ma odpalon¹ tarczê
+            bool hasShieldActive = collision.gameObject.GetComponent<BoatMovement>().isShieldActive;
+
+            // Jeœli gracz nie ma odpalonej tarczy, zadaj mu obra¿enia
+            if (!hasShieldActive)
+            {
+                playerHealth.TakeDamage(3);
+            }
         }
     }
 }

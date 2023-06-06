@@ -12,7 +12,7 @@ public class BoatMovement : MonoBehaviour
     [SerializeField]
     private GameObject shield;
     private bool canActivateShield = true;
-    private bool isShieldActive = false;
+    public bool isShieldActive = false;
     private float shieldDuration = 5f;
     private float shieldCooldown = 6f;
 
@@ -56,7 +56,7 @@ public class BoatMovement : MonoBehaviour
         }
     }
     }
-    
+            
            private void CheckShield()
     {
         
