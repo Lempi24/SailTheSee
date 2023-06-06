@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoatMovement : MonoBehaviour
 {
@@ -23,38 +24,50 @@ public class BoatMovement : MonoBehaviour
     private float dashingTime = 0.5f;
     private float dashingCooldown = 10f;
 
+
+    //Slider
+    public Slider dashCooldownSlider;
+    private float dashCooldownTimer = 0f;
     [SerializeField] private TrailRenderer tr;
 
     Vector2 movement; 
    
     void Update()
     {
-        CheckShield(); 
+        CheckShield();
 
-        if (isDashing) 
+
+        if (isDashing)
         {
             return;
         }
-        
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
 
-       
-        if(!PauseMenu.isPaused)
+
+        if (!PauseMenu.isPaused)
         {
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.magnitude);
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.magnitude);
         }
-        
-        if(!PauseMenu.isPaused)
+
+        if (!PauseMenu.isPaused)
         {
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
-        {
-            StartCoroutine(Dash());
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
+            {
+                dashCooldownTimer = dashingCooldown;
+                dashCooldownSlider.value = 0f;
+                StartCoroutine(Dash());
+            }
         }
-    }
+        if (dashCooldownTimer > 0f)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+            dashCooldownSlider.value = 1f - (dashCooldownTimer / dashingCooldown);
+        }
     }
             
            private void CheckShield()
@@ -67,6 +80,10 @@ public class BoatMovement : MonoBehaviour
             StartCoroutine(ActivateShield());
         }
     }
+    }
+    void Start()
+    {
+        dashCooldownSlider.value = 1f;
     }
 
     private IEnumerator ActivateShield()
@@ -104,5 +121,5 @@ public class BoatMovement : MonoBehaviour
         tr.emitting = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
-    } 
+    }
 }
