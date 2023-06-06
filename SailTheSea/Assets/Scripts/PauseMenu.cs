@@ -6,11 +6,13 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public static bool isPaused;
+    private MusicPlayer musicPlayer;
 
     void Start()
     {
         pauseMenu.SetActive(false);
-        isPaused = false; // Ustaw początkową wartość na false
+        isPaused = false; 
+        musicPlayer = FindObjectOfType<MusicPlayer>();
     }
 
     void Update()
@@ -20,10 +22,12 @@ public class PauseMenu : MonoBehaviour
             if (isPaused)
             {
                 ResumeGame();
+                musicPlayer.ResumeMusic();
             }
             else
             {
                 PauseGame();
+                musicPlayer.PauseMusic();
             }
         }
     }
