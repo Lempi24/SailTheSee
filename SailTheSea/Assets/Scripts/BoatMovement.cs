@@ -40,6 +40,7 @@ public class BoatMovement : MonoBehaviour
     {
         dashCooldownSlider.value = 1f;
         shieldCooldownSlider.value = 1f;
+        moveSpeed = 2f;
     }
 
     void Update()
