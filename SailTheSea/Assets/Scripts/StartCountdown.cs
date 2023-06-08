@@ -25,19 +25,19 @@ public class StartCountdown : MonoBehaviour
 
     void UpdateCountdownText()
     {
-        if (currentTime <= 3)
+        if (currentTime <= 3.5f)
         {
             CountdownText.color = Color.red;
         }
-        if (currentTime > 1)
+        if (currentTime > 1f)
         {
             CountdownText.text = currentTime.ToString("0");
         }
-        if (currentTime < 1)
+        if (currentTime < 1f)
         {
             CountdownText.text = "Start!";
         }
-        if (currentTime < 0)
+        if (currentTime < 0f)
         {
             CountdownText.text = "";
         }
