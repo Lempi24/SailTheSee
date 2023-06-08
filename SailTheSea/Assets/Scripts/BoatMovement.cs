@@ -36,11 +36,15 @@ public class BoatMovement : MonoBehaviour
 
     Vector2 movement;
 
+    
+
     void Start()
     {
         dashCooldownSlider.value = 1f;
         shieldCooldownSlider.value = 1f;
         moveSpeed = 2f;
+
+       
     }
 
     void Update()
@@ -51,6 +55,7 @@ public class BoatMovement : MonoBehaviour
         {
             return;
         }
+
 
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
