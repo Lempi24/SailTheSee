@@ -9,15 +9,20 @@ public class RandomSpawner : MonoBehaviour
     public float spawnInterval = 1f;
     public int spawnNumber = 5;
     private float timer = 0f;
+    private float CountdownTime = 0f;
 
     void Update()
     {
+        CountdownTime += Time.deltaTime;
         timer += Time.deltaTime;
 
-        if (timer >= spawnInterval && spawnPoints.Length >= 3)
+        if (CountdownTime > 6f)
         {
-            timer = 0f;
-            SpawnRandomPrefabs(spawnNumber);
+            if (timer >= spawnInterval && spawnPoints.Length >= 3)
+            {
+                timer = 0f;
+                SpawnRandomPrefabs(spawnNumber);
+            }
         }
     }
 
