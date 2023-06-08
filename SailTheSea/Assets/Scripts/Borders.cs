@@ -5,17 +5,29 @@ using UnityEngine;
 public class Borders : MonoBehaviour
 {
     private float minX, maxX, minY, maxY;
+    private float TimerIntro = 0f;
 
     private void Start()
     {
-        
         Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         minX = -screenBounds.x + 0.3f;
         maxX = screenBounds.x - 0.3f;
-        minY = -screenBounds.y + 0.3f;
+        minY = -screenBounds.y - 10f;
         maxY = screenBounds.y - 0.3f;
     }
 
+    void Update()
+    {
+        TimerIntro += Time.deltaTime;
+        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        minX = -screenBounds.x + 0.3f;
+        maxX = screenBounds.x - 0.3f;
+        if (TimerIntro > 5f)
+        {
+            minY = -screenBounds.y + 0.3f;
+        }
+        maxY = screenBounds.y - 0.3f;
+    }
     private void LateUpdate()
     {
         
