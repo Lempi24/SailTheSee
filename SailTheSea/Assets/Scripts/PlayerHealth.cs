@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public static event Action OnPlayerDeath;
 
     public float health, maxHealth;
-    public float DamageCooldown = 2f;
+    public float DamageCooldown = 1f;
     void Start()
     {
         health = maxHealth;    
@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         {
             health -= amount;
             OnPlayerDamaged?.Invoke();
-            DamageCooldown = 2f;
+            DamageCooldown = 1f;
         }
         
         if(health <=0)
