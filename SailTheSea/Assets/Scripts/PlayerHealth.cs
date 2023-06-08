@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     {
         DamageCooldown -= Time.deltaTime;
     }
+
     public void TakeDamage(float amount)
     {
         if (DamageCooldown <= 0f)
