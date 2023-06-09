@@ -4,47 +4,50 @@ using UnityEngine;
 
 public class ObstacleSpawnerAI : MonoBehaviour
 {
-    public Transform[] spawnPoints;
-    public GameObject[] spawnPrefabs;
-    public float spawnInterval = 1f;
-    public int spawnNumber = 5;
-    private float timer = 0f;
-    private float countdownTime = 0f;
+    public Transform[] spawnPoints; 
+    public GameObject objectToSpawn; 
+    public int[] spawnIndexes = { 1, 8, 2, 14, 11, 6, 13, 3, 9, 4, 12, 7, 5, 10, 13, 6, 11, 8, 1, 14, 2, 12, 9, 3, 10, 4, 7, 5, 11, 14, 1, 6, 12, 3, 9, 13, 2, 10, 7, 4, 8, 5, 14, 2, 6, 11, 9, 3, 12, 7, 10 };
 
-    void Update()
+    private int spawnIndex; 
+
+    private void Start()
     {
-        countdownTime += Time.deltaTime;
-        timer += Time.deltaTime;
-
-        if (countdownTime > 6f)
-        {
-            if (timer >= spawnInterval)
-            {
-                timer = 0f;
-                SpawnRandomPrefabs(spawnNumber);
-            }
-        }
+        spawnIndex = 0; 
+        InvokeRepeating("SpawnObjects", 0f, 3f);
     }
 
-    void SpawnRandomPrefabs(int count)
+    private void SpawnObjects()
     {
-        List<int> availableSpawnIndexes = new List<int>();
-
-        for (int i = 0; i < spawnPoints.Length; i++)
+       
+        if (spawnIndex >= spawnIndexes.Length)
         {
-            availableSpawnIndexes.Add(i);
+            Debug.LogWarning("Indeks spawnera przekracza zakres tablicy.");
+            spawnIndex = 0; 
         }
 
-        for (int i = 0; i < count; i++)
+       
+        for (int i = 0; i < 5; i++)
         {
-            if (availableSpawnIndexes.Count == 0)
+            int currentIndex = spawnIndex + i;
+
+           
+            if (currentIndex >= spawnIndexes.Length)
+            {
+                Debug.LogWarning("Indeks spawnera przekracza zakres tablicy.");
                 break;
+            }
 
-            int randomIndex = Random.Range(0, availableSpawnIndexes.Count);
-            int spawnIndex = availableSpawnIndexes[randomIndex];
-            availableSpawnIndexes.RemoveAt(randomIndex);
+           
+            if (spawnIndexes[currentIndex] >= spawnPoints.Length)
+            {
+                Debug.LogWarning("Indeks spawnera przekracza zakres tablicy spawnPoints.");
+                continue;
+            }
 
-            Instantiate(spawnPrefabs[i], spawnPoints[spawnIndex].position, Quaternion.identity);
+           
+            Instantiate(objectToSpawn, spawnPoints[spawnIndexes[currentIndex]].position, Quaternion.identity);
         }
+
+        spawnIndex += 5;
     }
 }
