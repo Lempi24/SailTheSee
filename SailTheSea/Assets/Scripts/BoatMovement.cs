@@ -114,6 +114,7 @@ public class BoatMovement : MonoBehaviour
         canActivateShield = false;
         shield.SetActive(true);
         isShieldActive = true;
+        
 
         yield return new WaitForSeconds(shieldDuration);
 
@@ -138,6 +139,15 @@ public class BoatMovement : MonoBehaviour
 
         canActivateShield = true;
     }
+    public void DisableShield()
+{
+    if (isShieldActive)
+    {
+        StopCoroutine(ActivateShield());
+        shield.SetActive(false);
+        isShieldActive = false;
+    }
+}
 
     void FixedUpdate()
     {

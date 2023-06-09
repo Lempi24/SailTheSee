@@ -9,14 +9,17 @@ public class DamageOnCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-
-            // SprawdŸ, czy gracz ma odpalon¹ tarczê
-            bool hasShieldActive = collision.gameObject.GetComponent<BoatMovement>().isShieldActive;
-
-            // Jeœli gracz nie ma odpalonej tarczy, zadaj mu obra¿enia
+            BoatMovement boatMovement = collision.gameObject.GetComponent<BoatMovement>();
+           
+            bool hasShieldActive = boatMovement.isShieldActive;
+            
             if (!hasShieldActive)
             {
                 playerHealth.TakeDamage(3);
+            }
+            else
+            {               
+                boatMovement.DisableShield();
             }
         }
     }
