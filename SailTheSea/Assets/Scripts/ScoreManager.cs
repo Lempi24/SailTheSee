@@ -7,13 +7,21 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
-
+    private bool startTimer = false;
     private float timeSurvived = 0f;
 
+    void Start()
+    {
+        StartCoroutine(StartTimerAfterDelay(5f));
+    }
+    
     void Update()
+    {
+        if (startTimer)        
     {
         timeSurvived += Time.deltaTime;
         UpdateTimeText();
+    }
     }
 
     void UpdateTimeText()
@@ -22,5 +30,10 @@ public class ScoreManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(timeSurvived % 60f);
 
         timeText.text = "Czas: " + minutes.ToString("00") + ":" + seconds.ToString("00");
+    }
+    private IEnumerator StartTimerAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        startTimer = true;
     }
 }
