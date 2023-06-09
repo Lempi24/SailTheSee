@@ -1,6 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GeneticAlgorithm : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class GeneticAlgorithm : MonoBehaviour
     private List<GameObject> population;
     private int currentGeneration = 0;
 
+    public TMP_Text generationText;
+
     void Start()
     {
         population = new List<GameObject>();
@@ -20,11 +24,14 @@ public class GeneticAlgorithm : MonoBehaviour
         
         for (int i = 0; i < populationSize; i++)
         {
-            GameObject newPlayer = Instantiate(player, transform.position, Quaternion.identity);
+            GameObject newPlayer = Instantiate(player, player.transform.position, Quaternion.identity);
             population.Add(newPlayer);
         }
 
         StartCoroutine(EvolutionLoop());
+
+        UpdateGenerationText();
+
     }
 
     IEnumerator EvolutionLoop()
@@ -119,5 +126,10 @@ public class GeneticAlgorithm : MonoBehaviour
 
        
         population.AddRange(offspring);
+    }
+    void UpdateGenerationText()
+    {
+        
+        generationText.text = "Generation: " + currentGeneration.ToString();
     }
 }
