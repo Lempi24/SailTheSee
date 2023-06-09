@@ -16,6 +16,14 @@ public class BoatMovement : MonoBehaviour
     public bool isShieldActive = false;
     private float shieldDuration = 5f;
     private float shieldCooldown = 6f;
+    // Mruganie tarczy
+     [SerializeField]
+    private Renderer shieldRenderer;    
+    private float shieldBlinkDuration = 2f;
+    private float shieldBlinkInterval = 0.15f;
+    private Coroutine shieldBlinkCoroutine;
+    public bool isShieldBlinking = false;
+
 
     // Dashing
     private bool canDash = true;
@@ -43,6 +51,7 @@ public class BoatMovement : MonoBehaviour
         dashCooldownSlider.value = 1f;
         shieldCooldownSlider.value = 1f;
         moveSpeed = 2f;
+        shieldRenderer = shield.GetComponent<Renderer>();
 
        
     }
@@ -114,6 +123,7 @@ public class BoatMovement : MonoBehaviour
         canActivateShield = false;
         shield.SetActive(true);
         isShieldActive = true;
+        shieldBlinkCoroutine = StartCoroutine(ShieldBlinkCoroutine());
         
 
         yield return new WaitForSeconds(shieldDuration);
@@ -138,6 +148,11 @@ public class BoatMovement : MonoBehaviour
         shieldCooldownSlider.value = 1f;
 
         canActivateShield = true;
+        if (shieldBlinkCoroutine != null)
+        {
+            StopCoroutine(shieldBlinkCoroutine);
+            shieldRenderer.enabled = true; // Make sure the shield is enabled when the coroutine stops
+        }
     }
     public void DisableShield()
 {
@@ -148,6 +163,27 @@ public class BoatMovement : MonoBehaviour
         isShieldActive = false;
     }
 }
+ private IEnumerator ShieldBlinkCoroutine()
+    {
+        isShieldBlinking = true;
+        float timer = 0f;
+
+        while (timer < shieldDuration - shieldBlinkDuration)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+        // Blink the shield texture
+        while (timer < shieldDuration)
+        {
+            shieldRenderer.enabled = !shieldRenderer.enabled;
+            yield return new WaitForSeconds(shieldBlinkInterval);
+            timer += shieldBlinkInterval;
+        }
+        shieldRenderer.enabled = true;
+        isShieldBlinking = false;
+    }
 
     void FixedUpdate()
     {

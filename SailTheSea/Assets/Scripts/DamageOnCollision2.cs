@@ -12,12 +12,13 @@ public class DamageOnCollision2 : MonoBehaviour
             BoatMovement boatMovement = collision.gameObject.GetComponent<BoatMovement>();
             
             bool hasShieldActive = boatMovement.isShieldActive;
+            bool isShieldBlinking = boatMovement.isShieldBlinking;
            
             if (!hasShieldActive)
             {
                 playerHealth.TakeDamage(1);
             }
-            else
+            else if (hasShieldActive || isShieldBlinking)
             {               
                 boatMovement.DisableShield();
             }
