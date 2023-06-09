@@ -23,6 +23,12 @@ public class BoatMovement : MonoBehaviour
     private float shieldBlinkInterval = 0.15f;
     private Coroutine shieldBlinkCoroutine;
     public bool isShieldBlinking = false;
+    
+    // Mruganie statku 
+    [SerializeField]
+    private Renderer shipRenderer;
+    private Coroutine shipBlinkCoroutine;
+    public bool isShipBlinking = false;
 
 
     // Dashing
@@ -52,6 +58,7 @@ public class BoatMovement : MonoBehaviour
         shieldCooldownSlider.value = 1f;
         moveSpeed = 2f;
         shieldRenderer = shield.GetComponent<Renderer>();
+        shipRenderer = GetComponent<Renderer>();
 
        
     }
@@ -151,7 +158,7 @@ public class BoatMovement : MonoBehaviour
         if (shieldBlinkCoroutine != null)
         {
             StopCoroutine(shieldBlinkCoroutine);
-            shieldRenderer.enabled = true; // Make sure the shield is enabled when the coroutine stops
+            shieldRenderer.enabled = true; 
         }
     }
     public void DisableShield()
@@ -173,8 +180,7 @@ public class BoatMovement : MonoBehaviour
             yield return null;
             timer += Time.deltaTime;
         }
-
-        // Blink the shield texture
+        
         while (timer < shieldDuration)
         {
             shieldRenderer.enabled = !shieldRenderer.enabled;
@@ -206,4 +212,24 @@ public class BoatMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
+    public IEnumerator StartShipBlinkCoroutine()
+{
+    yield return StartCoroutine(ShipBlinkCoroutine());
+}
+
+private IEnumerator ShipBlinkCoroutine()
+{
+    isShipBlinking = true;
+    float timer = 0f;
+
+    while (timer < 3f)
+    {
+        shipRenderer.enabled = !shipRenderer.enabled;
+        yield return new WaitForSeconds(0.2f);
+        timer += 0.2f;
+    }
+
+    shipRenderer.enabled = true;
+    isShipBlinking = false;
+}
 }

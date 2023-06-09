@@ -13,10 +13,21 @@ public class DamageOnCollision : MonoBehaviour
            
             bool hasShieldActive = boatMovement.isShieldActive;
             bool isShieldBlinking = boatMovement.isShieldBlinking;
+            bool isShipBlinking = boatMovement.isShipBlinking;
+            
+            if (isShipBlinking) 
+        {
+            return;
+        }
             
             if (!hasShieldActive)
             {
                 playerHealth.TakeDamage(3);
+
+            if (!boatMovement.isShipBlinking)
+        {
+            StartCoroutine(boatMovement.StartShipBlinkCoroutine());
+        }
             }
             else if (hasShieldActive || isShieldBlinking)
             {               
