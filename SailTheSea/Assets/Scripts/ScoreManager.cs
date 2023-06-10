@@ -29,7 +29,7 @@ public class ScoreManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(timeSurvived / 60f);
         int seconds = Mathf.FloorToInt(timeSurvived % 60f);
 
-        timeText.text = "Czas: " + minutes.ToString("00") + ":" + seconds.ToString("00");
+        timeText.text = "Time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
     }
     private IEnumerator StartTimerAfterDelay(float delay)
     {
