@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class ScoreManager : MonoBehaviour
     private float timeSurvived = 0f;
     public static float HighScoreMinutes = 0f;
     public static float HighScoreSeconds = 0f;
+    private float PreviousScore = 0f;
+    public UIManager uimanager;
 
 
     void Start()
     {
         StartCoroutine(StartTimerAfterDelay(5f));
+        PreviousScore = PlayerPrefs.GetFloat("HighScore");
     }
     
     void Update()
@@ -34,8 +38,14 @@ public class ScoreManager : MonoBehaviour
 
         timeText.text = "Time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
 
-        HighScoreMinutes = minutes;
-        HighScoreSeconds = seconds;
+        if (timeSurvived >= PreviousScore)
+        {
+            HighScoreMinutes = minutes;
+            HighScoreSeconds = seconds;
+            PlayerPrefs.SetFloat("HighScore", timeSurvived);
+            PlayerPrefs.SetFloat("HighScoreMinutes", HighScoreMinutes);
+            PlayerPrefs.SetFloat("HighScoreSeconds", HighScoreSeconds);
+        } 
     }
     private IEnumerator StartTimerAfterDelay(float delay)
     {

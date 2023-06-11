@@ -8,6 +8,6 @@ public class HighestScore : MonoBehaviour
     public TextMeshProUGUI HighestScoreText;
     void Start()
     {
-        HighestScoreText.text = "Highest Score: " + ScoreManager.HighScoreMinutes.ToString("00") + ":" + ScoreManager.HighScoreSeconds.ToString("00");  
+        HighestScoreText.text = "Highest Score: " + PlayerPrefs.GetFloat("HighScoreMinutes").ToString("00") + ":" + PlayerPrefs.GetFloat("HighScoreSeconds").ToString("00");  
     }
 }
