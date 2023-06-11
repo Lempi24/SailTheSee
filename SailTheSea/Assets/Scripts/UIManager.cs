@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void EnableGameOverMenu()
@@ -29,6 +29,6 @@ public class UIManager : MonoBehaviour
 
     public void QuitToMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }
