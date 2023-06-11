@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class ScoreManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
+    public PlayerHealth HealthCheck2;
     private bool startTimer = false;
     private float timeSurvived = 0f;
     public static float HighScoreMinutes = 0f;
     public static float HighScoreSeconds = 0f;
     private float PreviousScore = 0f;
-    public UIManager uimanager;
+    public int minutes = 0;
+    public int seconds = 0;
 
 
     void Start()
@@ -25,16 +28,19 @@ public class ScoreManager : MonoBehaviour
     void Update()
     {
         if (startTimer)
-        { 
-            timeSurvived += Time.deltaTime;
-            UpdateTimeText();
+        {
+            if (HealthCheck2.health > 0)
+            {
+                timeSurvived += Time.deltaTime;
+                UpdateTimeText();
+            }
         }
     }
 
     void UpdateTimeText()
     {
-        int minutes = Mathf.FloorToInt(timeSurvived / 60f);
-        int seconds = Mathf.FloorToInt(timeSurvived % 60f);
+        minutes = Mathf.FloorToInt(timeSurvived / 60f); 
+        seconds = Mathf.FloorToInt(timeSurvived % 60f);
 
         timeText.text = "Time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
 
