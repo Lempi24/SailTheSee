@@ -59,8 +59,6 @@ public class BoatMovement : MonoBehaviour
         moveSpeed = 2f;
         shieldRenderer = shield.GetComponent<Renderer>();
         shipRenderer = GetComponent<Renderer>();
-
-       
     }
 
     void Update()

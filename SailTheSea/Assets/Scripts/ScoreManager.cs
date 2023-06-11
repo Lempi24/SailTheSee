@@ -9,6 +9,9 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     private bool startTimer = false;
     private float timeSurvived = 0f;
+    public static float HighScoreMinutes = 0f;
+    public static float HighScoreSeconds = 0f;
+
 
     void Start()
     {
@@ -17,11 +20,11 @@ public class ScoreManager : MonoBehaviour
     
     void Update()
     {
-        if (startTimer)        
-    {
-        timeSurvived += Time.deltaTime;
-        UpdateTimeText();
-    }
+        if (startTimer)
+        { 
+            timeSurvived += Time.deltaTime;
+            UpdateTimeText();
+        }
     }
 
     void UpdateTimeText()
@@ -30,6 +33,9 @@ public class ScoreManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(timeSurvived % 60f);
 
         timeText.text = "Time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
+
+        HighScoreMinutes = minutes;
+        HighScoreSeconds = seconds;
     }
     private IEnumerator StartTimerAfterDelay(float delay)
     {
