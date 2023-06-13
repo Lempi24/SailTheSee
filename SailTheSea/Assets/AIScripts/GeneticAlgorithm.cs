@@ -15,6 +15,7 @@ public class GeneticAlgorithm : MonoBehaviour
     private List<GameObject> population;
     private int currentGeneration = 0;
     public PlayerHealthAI healthAI;
+    public TimerAI PlayerCheck;
 
     public TMP_Text generationText;
 
@@ -34,9 +35,9 @@ public class GeneticAlgorithm : MonoBehaviour
 
     void Update()
     {
-        if (healthAI.health <= 0)
+        if (PlayerCheck.PlayerAI)
         {
-            population.Remove(player);
+            List<GameObject> population = new List<GameObject>();
         }
         if(population.Count <= 2)
         { 
