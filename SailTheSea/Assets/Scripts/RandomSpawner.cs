@@ -10,6 +10,7 @@ public class RandomSpawner : MonoBehaviour
     public int spawnNumber = 5;
     private float timer = 0f;
     private float CountdownTime = 0f;
+    private float period = 0f;
 
     void Update()
     {
@@ -24,6 +25,16 @@ public class RandomSpawner : MonoBehaviour
                 SpawnRandomPrefabs(spawnNumber);
             }
         }
+        if(spawnInterval < 0.4f)
+        {
+            spawnInterval = 0.4f;
+        }
+        if (period > 2f)
+        {
+            spawnInterval -= 0.1f;
+            period = 0;
+        }
+        period += UnityEngine.Time.deltaTime;
     }
 
     void SpawnRandomPrefabs(int count)
@@ -48,4 +59,5 @@ public class RandomSpawner : MonoBehaviour
             Instantiate(spawnPrefabs[Random.Range(0, spawnPrefabs.Length)], spawnPoints[spawnIndex].position, Quaternion.identity);
         }
     }
+   
 }
