@@ -11,6 +11,6 @@ public class YourScore : MonoBehaviour
 
     void Start()
     {
-        YourTimeIs.text = "YOUR SCORE: " + TimeCheck.minutes.ToString("00") + ":" + TimeCheck.seconds.ToString("00");
+        YourTimeIs.text = "CURRENT TIME: " + TimeCheck.minutes.ToString("00") + ":" + TimeCheck.seconds.ToString("00");
     }
 }
