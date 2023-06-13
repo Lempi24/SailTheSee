@@ -8,9 +8,7 @@ public class DamageOnColisionAI : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerHealthAI playerHealth = collision.gameObject.GetComponent<PlayerHealthAI>();
-            playerHealth.TakeDamage(3);
-
+            PlayerHealthAI.TakeDamage(3);
         }
     }
 }

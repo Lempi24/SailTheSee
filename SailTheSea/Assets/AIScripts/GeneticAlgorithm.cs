@@ -6,51 +6,69 @@ using TMPro;
 
 public class GeneticAlgorithm : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject PlayerAI;
     public GameObject obstacleSpawner;
 
     public int populationSize = 50;
     public int maxGenerations = 15;
+    private int currentGeneration = 0;
+    private int GenerationCount = 0;
 
     private List<GameObject> population;
-    private int currentGeneration = 0;
-    public PlayerHealthAI healthAI;
-    public TimerAI PlayerCheck;
-
     public TMP_Text generationText;
 
     void Start()
     {
-        //Spawn AI
+        GenerationCount = populationSize;
+        //Spawn AI na podstawie wielkosci populacji
         population = new List<GameObject>();
 
         for (int i = 0; i < populationSize; i++)
         {
-            GameObject newPlayer = Instantiate(player, player.transform.position, Quaternion.identity);
+            GameObject newPlayer = Instantiate(PlayerAI, PlayerAI.transform.position, Quaternion.identity);
             population.Add(newPlayer);
         }
-
-        UpdateGenerationText();
     }
 
     void Update()
     {
-        if (PlayerCheck.PlayerAI)
+        //Sprawdza czy jest taki ktos jak Player
+        PlayerAI = GameObject.FindGameObjectWithTag("Player");
+        //Jesli jest taki ktos z tagiem player to rob to:
+        if (PlayerAI.scene.IsValid() == true) 
         {
-            List<GameObject> population = new List<GameObject>();
-        }
-        if(population.Count <= 2)
-        { 
+            //Jesli liczba populacji jest rowna 2
+            if (GenerationCount <= 2)
+            { 
+                population = new List<GameObject>();
 
-            currentGeneration++;
+                for (int i = 0; i < populationSize; i++)
+                {
+                    GameObject newPlayer = Instantiate(PlayerAI, PlayerAI.transform.position, Quaternion.identity);
+                    population.Add(newPlayer);
+                }
+                currentGeneration++;
+            }
         }
         UpdateGenerationText();
-
-
     }
 
+    //Wyswietlanie numeru Generacji
     void UpdateGenerationText()
     {
-        generationText.text = "Generation: " + currentGeneration.ToString();
+        generationText.text = "Generation: " + currentGeneration.ToString() + "Count: " + GenerationCount.ToString();
     }
 }
+
+//
+//GenerationCount = maxGenerations;
+//Spawn AI
+//population = new List<GameObject>();
+
+//for (int i = 0; i < populationSize; i++)
+//{
+//    GameObject newPlayer = Instantiate(player, player.transform.position, Quaternion.identity);
+//    population.Add(newPlayer);
+//}
+
+//UpdateGenerationText();

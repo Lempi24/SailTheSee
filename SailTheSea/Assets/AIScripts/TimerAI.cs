@@ -9,12 +9,13 @@ public class TimerAI : MonoBehaviour
     public int secondsAI = 0;
     private float timeSurvivedAI = 0f;
     public TextMeshProUGUI TimerAIDisplay;
-    public GameObject PlayerAI;
+    public GeneticAlgorithm PlayerCheck;
 
     void Update()
     {
-        PlayerAI = GameObject.FindGameObjectWithTag("Player");
-        if (PlayerAI.scene.IsValid() == true) //Wstaw tu pozniej co generacje
+        
+        //Jezeli jest obiekt o tagu player na scenie to liczy sie czas
+        if (PlayerCheck.PlayerAI.scene.IsValid() == true)
         {
                 timeSurvivedAI += Time.deltaTime;
                 UpdateTimeTextAI();
@@ -25,6 +26,7 @@ public class TimerAI : MonoBehaviour
         }
         
     }
+    //Funkcja wyswietlania czasu
     public void UpdateTimeTextAI()
     {
         minutesAI = Mathf.FloorToInt(timeSurvivedAI / 60f);
