@@ -8,6 +8,7 @@ public class BoatMovement : MonoBehaviour
     public float moveSpeed = 3f;
     public Rigidbody2D rb;
     public Animator animator;
+    private bool canAnimate = false;
 
     // Shield
     [SerializeField]
@@ -59,10 +60,20 @@ public class BoatMovement : MonoBehaviour
         moveSpeed = 2f;
         shieldRenderer = shield.GetComponent<Renderer>();
         shipRenderer = GetComponent<Renderer>();
+        canAnimate = false;
+        Invoke(nameof(EnableAnimation), 5f);
     }
+    void EnableAnimation()
+   {
+        canAnimate = true;
+   }
 
     void Update()
     {
+        if (!canAnimate)
+    {
+        return;
+    }
         CheckShield();
 
         if (isDashing)
