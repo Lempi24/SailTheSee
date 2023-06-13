@@ -12,7 +12,7 @@ public class GeneticAlgorithm : MonoBehaviour
     public int populationSize = 50;
     public int maxGenerations = 15;
     private int currentGeneration = 0;
-    private int GenerationCount = 0;
+    public int GenerationCount = 0;
 
     private List<GameObject> population;
     public TMP_Text generationText;
@@ -25,8 +25,8 @@ public class GeneticAlgorithm : MonoBehaviour
 
         for (int i = 0; i < populationSize; i++)
         {
-            GameObject newPlayer = Instantiate(PlayerAI, PlayerAI.transform.position, Quaternion.identity);
-            population.Add(newPlayer);
+            GameObject newPlayerAI = Instantiate(PlayerAI, PlayerAI.transform.position, Quaternion.identity);
+            population.Add(newPlayerAI);
         }
     }
 

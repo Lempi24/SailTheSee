@@ -133,3 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab2b86b367b2f54cb917cdc44954685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerHealthAI: {fileID: 1600880109671995628, guid: bf6b0518ddf52d6489f23bea3bca20e1, type: 3}

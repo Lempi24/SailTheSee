@@ -1,24 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerHealthAI : MonoBehaviour
 {
-    public GeneticAlgorithm GenerationCountDecrease;
-    public float health, maxHealth = 1;
+    public float healthAI, maxHealth = 1;
     void Start()
     {
-        health = maxHealth;
+        healthAI = maxHealth;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(int amount)
     {
-
-        if (health <= 0)
+        healthAI -= amount;
+        if (healthAI <= 0)
         {
-            health = 0;
+            healthAI = 0;
             Destroy(gameObject);
-            GenerationCountDecrease.GenerationCount 
         }
     }
 }

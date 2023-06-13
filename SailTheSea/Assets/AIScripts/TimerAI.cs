@@ -17,6 +17,10 @@ public class TimerAI : MonoBehaviour
         //Jezeli jest obiekt o tagu player na scenie to liczy sie czas
         if (PlayerCheck.PlayerAI.scene.IsValid() == true)
         {
+                if(PlayerCheck.PlayerAI.scene.IsValid() == false)
+                {
+                    
+                }   
                 timeSurvivedAI += Time.deltaTime;
                 UpdateTimeTextAI();
         }
