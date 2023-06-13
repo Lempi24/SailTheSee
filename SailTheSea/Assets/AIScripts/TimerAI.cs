@@ -7,16 +7,21 @@ public class TimerAI : MonoBehaviour
 {
     public int minutesAI = 0;
     public int secondsAI = 0;
-    public PlayerHealthAI PlayerHealthAICheck;
     private float timeSurvivedAI = 0f;
     public TextMeshProUGUI TimerAIDisplay;
+    public GameObject PlayerAI;
 
     void Update()
     {
-        if (PlayerHealthAICheck.health > 0) //Wstaw tu pozniej co generacje
+        PlayerAI = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerAI.scene.IsValid() == true) //Wstaw tu pozniej co generacje
         {
                 timeSurvivedAI += Time.deltaTime;
                 UpdateTimeTextAI();
+        }
+        else
+        {
+            timeSurvivedAI = 0f;
         }
         
     }
