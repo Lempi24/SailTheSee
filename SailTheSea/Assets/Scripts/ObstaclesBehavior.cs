@@ -21,8 +21,9 @@ public class ObstaclesBehavior : MonoBehaviour
         
         if (transform.position.y < mainCamera.transform.position.y - mainCamera.orthographicSize)
         {
-            
             Destroy(gameObject);
         }
+        
     }
+    
 }
