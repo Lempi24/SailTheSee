@@ -16,11 +16,15 @@ public class BordersAI : MonoBehaviour
         maxY = screenBounds.y - 0.3f;
     }
 
-    private void LateUpdate()
+    void Update()
     {
-
+        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        minX = -screenBounds.x + 0.3f;
+        maxX = screenBounds.x - 0.3f;
+        minY = -screenBounds.y + 0.3f;
+        maxY = screenBounds.y - 0.3f;
+        
         Vector3 currentPosition = transform.position;
-
 
         float clampedX = Mathf.Clamp(currentPosition.x, minX, maxX);
         float clampedY = Mathf.Clamp(currentPosition.y, minY, maxY);
@@ -29,4 +33,3 @@ public class BordersAI : MonoBehaviour
         transform.position = new Vector3(clampedX, clampedY, currentPosition.z);
     }
 }
-
