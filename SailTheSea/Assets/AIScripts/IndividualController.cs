@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +14,9 @@ public class IndividualController : MonoBehaviour
     public int NumberOfTries = 1;
 
     [Range(-1f, 1f)]
-    public float up, turn;
+    public float up;
+    [Range(-1f, 1f)]
+    public float turn;
 
     public float timeSinceStart = 0f;
 
@@ -76,7 +79,7 @@ public class IndividualController : MonoBehaviour
 
         (turn, up) = network.RunNetwork(aSensor, bSensor, cSensor);
 
-        BoatMove(turn, up);
+        BoatMove(up, turn);
         timeSinceStart += Time.deltaTime;
         CalculateFitness();
 
@@ -137,7 +140,7 @@ public class IndividualController : MonoBehaviour
     private Vector3 inputAI;
     public void BoatMove(float horizontal, float vertical)
     {
-        inputAI = new Vector2(horizontal * 0.1f, vertical * 0.2f);
+        inputAI = new Vector2(horizontal * 0.1f, vertical * 0.1f);
         inputAI = transform.TransformDirection(inputAI);
         transform.position += inputAI;
     }
