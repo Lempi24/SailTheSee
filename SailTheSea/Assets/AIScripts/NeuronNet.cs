@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class NeuronNet : MonoBehaviour
 {
     //Macierz dla sensorów
-    public Matrix<float> inputLayer = Matrix<float>.Build.Dense(1, 3);
+    public Matrix<float> inputLayer = Matrix<float>.Build.Dense(1, 5);
 
     public List<Matrix<float>> hiddenLayers = new List<Matrix<float>>();
 
@@ -45,7 +45,7 @@ public class NeuronNet : MonoBehaviour
             //Wagi
             if (i == 0)
             {
-                Matrix<float> inputToH1 = Matrix<float>.Build.Dense(3, hiddenNeuronCount);
+                Matrix<float> inputToH1 = Matrix<float>.Build.Dense(5, hiddenNeuronCount);
                 weights.Add(inputToH1);
             }
             else
@@ -77,11 +77,13 @@ public class NeuronNet : MonoBehaviour
         }
     }
 
-    public (float, float) RunNetwork (float a, float b, float c)
+    public (float, float) RunNetwork (float a, float b, float c, float d, float e)
     {
         inputLayer[0, 0] = a;
         inputLayer[0, 1] = b;
         inputLayer[0, 2] = c;
+        inputLayer[0, 3] = d;
+        inputLayer[0, 4] = e;
 
         inputLayer = inputLayer.PointwiseTanh();
 
@@ -95,11 +97,6 @@ public class NeuronNet : MonoBehaviour
         outputLayer = ((hiddenLayers[hiddenLayers.Count - 1] * weights[weights.Count - 1]) + biases[biases.Count - 1]).PointwiseTanh();  
 
         //Pierwszy output to up a drugi output to turn
-        return (Sigmoid(outputLayer[0, 0]), (float)Math.Tanh(outputLayer[0, 1]));
-    }
-
-    private float Sigmoid (float s)
-    {
-        return (1/ (1 + Mathf.Exp(-s)));
+        return ((float)Math.Tanh(outputLayer[0, 0]), (float)Math.Tanh(outputLayer[0, 1]));
     }
 }
