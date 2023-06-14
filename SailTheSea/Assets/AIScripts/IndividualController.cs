@@ -20,8 +20,8 @@ public class IndividualController : MonoBehaviour
     //Jak dobrze idzie AI
     [Header("Fitness")]
     public float overallFitness;
-    public float avgTimeMultiplier = 1.4f;
-    public float sensorMultiplier = 0.1f;
+    public float avgTimeMultiplier = 0.9f;
+    public float sensorMultiplier = 1.2f;
 
     [Header("NetworkOptions")]
     public int Layers = 1;
@@ -87,7 +87,7 @@ public class IndividualController : MonoBehaviour
         totalTimeSurvived += Time.deltaTime;
         overallFitness = (totalTimeSurvived * avgTimeMultiplier)+(((aSensor+bSensor+cSensor)/3)*sensorMultiplier);
 
-        if(timeSinceStart > 8f && overallFitness < 40f)
+        if(timeSinceStart > 30f && overallFitness < 40f)
         {
             Reset();
         }
@@ -137,7 +137,7 @@ public class IndividualController : MonoBehaviour
     private Vector3 inputAI;
     public void BoatMove(float horizontal, float vertical)
     {
-        inputAI = new Vector2(horizontal * 0.1f, vertical * 0.1f);
+        inputAI = new Vector2(horizontal * 0.1f, vertical * 0.2f);
         inputAI = transform.TransformDirection(inputAI);
         transform.position += inputAI;
     }
