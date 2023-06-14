@@ -113,23 +113,23 @@ public class IndividualController : MonoBehaviour
         RaycastHit2D hit;
 
         //Tworzenie lini raycastu zaczynaj¹c od pozycji statku lec¹c w nieskoñczonoœæ "Mathf.Infinity" a¿ do obiektu z mask¹ raycast lub wypadniêcia poza ekran gry
-        hit = Physics2D.Raycast(transform.position, a, Mathf.Infinity, obstacleLayerMask);
+        hit = Physics2D.Raycast(transform.position, a, 3f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            aSensor = hit.distance / 20f;
+            aSensor = hit.distance / 100f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
 
         }
 
-        hit = Physics2D.Raycast(transform.position, b, Mathf.Infinity, obstacleLayerMask);
+        hit = Physics2D.Raycast(transform.position, b, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            bSensor = hit.distance / 20f;
+            bSensor = hit.distance / 100f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
 
         }
 
-        hit = Physics2D.Raycast(transform.position, c, Mathf.Infinity, obstacleLayerMask);
+        hit = Physics2D.Raycast(transform.position, c, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
             cSensor = hit.distance / 20f;
@@ -137,15 +137,15 @@ public class IndividualController : MonoBehaviour
 
         }
 
-        hit = Physics2D.Raycast(transform.position, d, Mathf.Infinity, obstacleLayerMask);
+        hit = Physics2D.Raycast(transform.position, d, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            dSensor = hit.distance / 20f;
+            dSensor = hit.distance / 100f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
 
         }
 
-        hit = Physics2D.Raycast(transform.position, e, Mathf.Infinity, obstacleLayerMask);
+        hit = Physics2D.Raycast(transform.position, e, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
             eSensor = hit.distance / 20f;
@@ -157,7 +157,7 @@ public class IndividualController : MonoBehaviour
     private Vector3 inputAI;
     public void BoatMove(float horizontal, float vertical)
     {
-        inputAI = new Vector2(horizontal * 0.1f, vertical * 0.1f);
+        inputAI = new Vector2(horizontal * 0.05f, vertical * 0.05f);
         inputAI = transform.TransformDirection(inputAI);
         transform.position += inputAI;
     }
