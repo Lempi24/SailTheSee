@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(NeuronNet))]
+
 public class IndividualController : MonoBehaviour
 {
     //Pocz¹tkowa pozycja i rotacja obiektu
     private Vector2 startPosition, startRotation;
-
+    private NeuronNet network;
     public int NumberOfTries = 1;
-    Rigidbody2D rb;
 
     [Range(-1f, 1f)]
     public float up, turn;
@@ -22,6 +23,10 @@ public class IndividualController : MonoBehaviour
     public float avgTimeMultiplier = 1.4f;
     public float sensorMultiplier = 0.1f;
 
+    [Header("NetworkOptions")]
+    public int Layers = 1;
+    public int Neurons = 10;
+
     private Vector2 lastPosition;
     private float totalTimeSurvived;
 
@@ -31,6 +36,7 @@ public class IndividualController : MonoBehaviour
     private void Awake()
     {
         startPosition = transform.position;
+        network = GetComponent<NeuronNet>();
     }
 
     public void Reset()
@@ -39,9 +45,12 @@ public class IndividualController : MonoBehaviour
         timeSinceStart = 0f;
         totalTimeSurvived = 0f;
         lastPosition = startPosition;
-        overallFitness = 0f ;
+        overallFitness = 0f;
         transform.position = startPosition;
         NumberOfTries++;
+
+        //Test Code
+        network.Initialise(Layers, Neurons);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -57,15 +66,14 @@ public class IndividualController : MonoBehaviour
         InputSensors();
         lastPosition = transform.position;
 
+        (turn, up) = network.RunNetwork(aSensor, bSensor, cSensor);
+
         BoatMove(turn, up);
         timeSinceStart += Time.deltaTime;
         CalculateFitness();
 
     }
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+
     private void CalculateFitness()
     {
         totalTimeSurvived += Time.deltaTime;
@@ -96,7 +104,7 @@ public class IndividualController : MonoBehaviour
         hit = Physics2D.Raycast(transform.position, w, Mathf.Infinity, obstacleLayerMask);
         if (hit.collider != null)
         {
-            aSensor = hit.distance / 5f;
+            aSensor = hit.distance / 20f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
             Debug.Log("A: " + aSensor);
         }
@@ -104,7 +112,7 @@ public class IndividualController : MonoBehaviour
         hit = Physics2D.Raycast(transform.position, d, Mathf.Infinity, obstacleLayerMask);
         if (hit.collider != null)
         {
-            bSensor = hit.distance / 5f;
+            bSensor = hit.distance / 20f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
             Debug.Log("B: " + bSensor);
         }
@@ -112,7 +120,7 @@ public class IndividualController : MonoBehaviour
         hit = Physics2D.Raycast(transform.position, a, Mathf.Infinity, obstacleLayerMask);
         if (hit.collider != null)
         {
-            cSensor = hit.distance / 5f;
+            cSensor = hit.distance / 20f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
             Debug.Log("C: " + cSensor);
         }
