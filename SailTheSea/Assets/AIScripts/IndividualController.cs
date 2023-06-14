@@ -34,7 +34,7 @@ public class IndividualController : MonoBehaviour
     private float totalTimeSurvived;
 
     //Dystans do Obstacles
-    private float aSensor, bSensor, cSensor, dSensor, eSensor;
+    private float aSensor, bSensor, cSensor, dSensor, eSensor, fSensor;
 
     private ObstacleSpawnerAI obstacleSpawner;
 
@@ -77,7 +77,7 @@ public class IndividualController : MonoBehaviour
         InputSensors();
         lastPosition = transform.position;
 
-        (turn, up) = network.RunNetwork(aSensor, bSensor, cSensor, dSensor, eSensor);
+        (turn, up) = network.RunNetwork(aSensor, bSensor, cSensor, dSensor, eSensor, fSensor);
 
         BoatMove(turn, up);
         timeSinceStart += Time.deltaTime;
@@ -107,50 +107,59 @@ public class IndividualController : MonoBehaviour
         Vector2 c = -transform.right;
         Vector2 d = transform.right + transform.up;
         Vector2 e = transform.right;
+        Vector2 f = -transform.up;
 
         //Pobranie maski warstwy przeszkód które ma wykrywaæ raycast
         LayerMask obstacleLayerMask = LayerMask.GetMask("Obstacles");
         RaycastHit2D hit;
 
         //Tworzenie lini raycastu zaczynaj¹c od pozycji statku lec¹c w nieskoñczonoœæ "Mathf.Infinity" a¿ do obiektu z mask¹ raycast lub wypadniêcia poza ekran gry
-        hit = Physics2D.Raycast(transform.position, a, 3f, obstacleLayerMask);
+        hit = Physics2D.Raycast(transform.position, a, 2f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            aSensor = hit.distance / 100f;
+            aSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-
+            Debug.Log("a: " + aSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, b, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            bSensor = hit.distance / 100f;
+            bSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-
+            Debug.Log("b: " + bSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, c, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            cSensor = hit.distance / 20f;
+            cSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-
+            Debug.Log("c: " + cSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, d, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            dSensor = hit.distance / 100f;
+            dSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-
+            Debug.Log("d: " + dSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, e, 1.5f, obstacleLayerMask);
         if (hit.collider != null)
         {
-            eSensor = hit.distance / 20f;
+            eSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
+            Debug.Log("e: " + eSensor);
+        }
 
+        hit = Physics2D.Raycast(transform.position, f, 3.1f, obstacleLayerMask);
+        if (hit.collider != null)
+        {
+            fSensor = hit.distance / 2f;
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+            Debug.Log("f: " + fSensor);
         }
     }
 

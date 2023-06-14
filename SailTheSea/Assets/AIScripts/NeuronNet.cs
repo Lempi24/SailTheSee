@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class NeuronNet : MonoBehaviour
 {
     //Macierz dla sensorów
-    public Matrix<float> inputLayer = Matrix<float>.Build.Dense(1, 5);
+    public Matrix<float> inputLayer = Matrix<float>.Build.Dense(1, 6);
 
     public List<Matrix<float>> hiddenLayers = new List<Matrix<float>>();
 
@@ -45,7 +45,7 @@ public class NeuronNet : MonoBehaviour
             //Wagi
             if (i == 0)
             {
-                Matrix<float> inputToH1 = Matrix<float>.Build.Dense(5, hiddenNeuronCount);
+                Matrix<float> inputToH1 = Matrix<float>.Build.Dense(6, hiddenNeuronCount);
                 weights.Add(inputToH1);
             }
             else
@@ -77,13 +77,14 @@ public class NeuronNet : MonoBehaviour
         }
     }
 
-    public (float, float) RunNetwork (float a, float b, float c, float d, float e)
+    public (float, float) RunNetwork (float a, float b, float c, float d, float e, float f)
     {
         inputLayer[0, 0] = a;
         inputLayer[0, 1] = b;
         inputLayer[0, 2] = c;
         inputLayer[0, 3] = d;
         inputLayer[0, 4] = e;
+        inputLayer[0, 5] = f;
 
         inputLayer = inputLayer.PointwiseTanh();
 
