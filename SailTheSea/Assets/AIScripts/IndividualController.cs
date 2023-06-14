@@ -27,8 +27,8 @@ public class IndividualController : MonoBehaviour
     public float sensorMultiplier = 1.2f;
 
     [Header("NetworkOptions")]
-    public int Layers = 1;
-    public int Neurons = 10;
+    public int Layers = 2;
+    public int Neurons = 15;
 
     private Vector2 lastPosition;
     private float totalTimeSurvived;
@@ -79,7 +79,7 @@ public class IndividualController : MonoBehaviour
 
         (turn, up) = network.RunNetwork(aSensor, bSensor, cSensor, dSensor, eSensor);
 
-        BoatMove(up, turn);
+        BoatMove(turn, up);
         timeSinceStart += Time.deltaTime;
         CalculateFitness();
 
@@ -88,7 +88,7 @@ public class IndividualController : MonoBehaviour
     private void CalculateFitness()
     {
         totalTimeSurvived += Time.deltaTime;
-        overallFitness = (totalTimeSurvived * avgTimeMultiplier)+(((aSensor+bSensor+cSensor+dSensor+eSensor)/5)*sensorMultiplier);
+        overallFitness = (totalTimeSurvived * avgTimeMultiplier)+((((2*aSensor)+bSensor+cSensor+dSensor+eSensor)/6)*sensorMultiplier);
 
         if(timeSinceStart > 30f && overallFitness < 40f)
         {
