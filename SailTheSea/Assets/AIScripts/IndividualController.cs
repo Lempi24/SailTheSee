@@ -83,36 +83,38 @@ public class IndividualController : MonoBehaviour
 
     private void InputSensors()
     {
-        Vector2 w = (transform.up);
-        Vector2 d = (transform.up - transform.right);
-        Vector2 a = (-transform.right);
-        Vector2 s = (-transform.up);
+        Vector2 w = transform.up;
+        Vector2 d = transform.up - transform.right;
+        Vector2 a = -transform.right;
+        Vector2 s = -transform.up;
 
-        Ray r = new Ray(transform.position, w);
-        RaycastHit hit;
+        //Pobranie maski warstwy przeszkód które ma wykrywaæ raycast
+        LayerMask obstacleLayerMask = LayerMask.GetMask("Obstacles");
+        RaycastHit2D hit;
 
-        if (Physics.Raycast(r, out hit) )
+        //Tworzenie lini raycastu zaczynaj¹c od pozycji statku lec¹c w nieskoñczonoœæ "Mathf.Infinity" a¿ do obiektu z mask¹ raycast lub wypadniêcia poza ekran gry
+        hit = Physics2D.Raycast(transform.position, w, Mathf.Infinity, obstacleLayerMask);
+        if (hit.collider != null)
         {
             aSensor = hit.distance / 5f;
-            Debug.DrawLine(r.origin, hit.point, Color.red);
-            print("A: " + aSensor);
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+            Debug.Log("A: " + aSensor);
         }
-        r.direction = d;
 
-        if(Physics.Raycast(r,out hit) )
+        hit = Physics2D.Raycast(transform.position, d, Mathf.Infinity, obstacleLayerMask);
+        if (hit.collider != null)
         {
             bSensor = hit.distance / 5f;
-            Debug.DrawLine(r.origin, hit.point, Color.red);
-            print("B: " + bSensor);
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+            Debug.Log("B: " + bSensor);
         }
 
-        r.direction = a;
-
-        if (Physics.Raycast(r,out hit) )
+        hit = Physics2D.Raycast(transform.position, a, Mathf.Infinity, obstacleLayerMask);
+        if (hit.collider != null)
         {
             cSensor = hit.distance / 5f;
-            Debug.DrawLine(r.origin, hit.point, Color.red);
-            print("C: " + cSensor);
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+            Debug.Log("C: " + cSensor);
         }
     }
 
