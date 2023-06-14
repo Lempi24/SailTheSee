@@ -33,6 +33,13 @@ public class IndividualController : MonoBehaviour
     //Dystans do Obstacles
     private float aSensor, bSensor, cSensor;
 
+    private ObstacleSpawnerAI obstacleSpawner;
+
+    private void Start()
+    {
+        obstacleSpawner = FindObjectOfType<ObstacleSpawnerAI>();
+    }
+
     private void Awake()
     {
         startPosition = transform.position;
@@ -58,6 +65,7 @@ public class IndividualController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Reset();
+            obstacleSpawner.ResetSpawner();
         }
     }
 
@@ -106,7 +114,7 @@ public class IndividualController : MonoBehaviour
         {
             aSensor = hit.distance / 20f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("A: " + aSensor);
+
         }
 
         hit = Physics2D.Raycast(transform.position, d, Mathf.Infinity, obstacleLayerMask);
@@ -114,7 +122,7 @@ public class IndividualController : MonoBehaviour
         {
             bSensor = hit.distance / 20f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("B: " + bSensor);
+
         }
 
         hit = Physics2D.Raycast(transform.position, a, Mathf.Infinity, obstacleLayerMask);
@@ -122,7 +130,7 @@ public class IndividualController : MonoBehaviour
         {
             cSensor = hit.distance / 20f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("C: " + cSensor);
+
         }
     }
 

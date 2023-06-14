@@ -34,6 +34,7 @@ public class NeuronNet : MonoBehaviour
 
         for (int i = 0; i < hiddenLayerCount + 1; i++) 
         {
+
             Matrix<float> f = Matrix<float>.Build.Dense(1, hiddenNeuronCount);
 
             hiddenLayers.Add(f);
