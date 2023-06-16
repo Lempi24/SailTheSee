@@ -25,11 +25,11 @@ public class RandomSpawner : MonoBehaviour
                 SpawnRandomPrefabs(spawnNumber);
             }
         }
-        if(spawnInterval < 0.4f)
+        if(spawnInterval < 0.5f)
         {
-            spawnInterval = 0.4f;
+            spawnInterval = 0.5f;
         }
-        if (period > 2f)
+        if (period > 3f)
         {
             spawnInterval -= 0.1f;
             period = 0;
