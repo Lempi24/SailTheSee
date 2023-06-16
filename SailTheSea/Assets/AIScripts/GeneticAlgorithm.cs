@@ -8,7 +8,7 @@ public class GeneticAlgorithm : MonoBehaviour
 {
     public GameObject PlayerAI;
     public GameObject obstacleSpawner;
-
+  
     public int populationSize = 50;
     public int maxGenerations = 15;
     private int currentGeneration = 0;

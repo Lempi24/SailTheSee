@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,8 +28,8 @@ public class IndividualController : MonoBehaviour
     public float sensorMultiplier = 1.2f;
 
     [Header("NetworkOptions")]
-    public int Layers = 2;
-    public int Neurons = 15;
+    public int Layers = 1;
+    public int Neurons = 10;
 
     private Vector2 lastPosition;
     private float totalTimeSurvived;
@@ -48,6 +49,11 @@ public class IndividualController : MonoBehaviour
         startPosition = transform.position;
         network = GetComponent<NeuronNet>();
     }
+    public void ResetWithNetwork(NeuronNet net)
+    {
+        network = net;
+        Reset();
+    }
 
     public void Reset()
     {
@@ -58,16 +64,13 @@ public class IndividualController : MonoBehaviour
         overallFitness = 0f;
         transform.position = startPosition;
         NumberOfTries++;
-
-        //Test Code
-        network.Initialise(Layers, Neurons);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Reset();
+            Death();
             obstacleSpawner.ResetSpawner();
         }
     }
@@ -82,21 +85,25 @@ public class IndividualController : MonoBehaviour
         BoatMove(turn);
         timeSinceStart += Time.deltaTime;
         CalculateFitness();
+    }
 
+    private void Death()
+    {
+        GameObject.FindObjectOfType<GeneticManager>().Death(overallFitness, network);
     }
 
     private void CalculateFitness()
     {
         totalTimeSurvived += Time.deltaTime;
-        overallFitness = (totalTimeSurvived * avgTimeMultiplier)+((((2*aSensor)+bSensor+cSensor+dSensor+eSensor)/6)*sensorMultiplier);
+        overallFitness = (totalTimeSurvived * avgTimeMultiplier) + ((((2 * aSensor) + bSensor + cSensor + dSensor + eSensor) / 6) * sensorMultiplier);
 
-        if(timeSinceStart > 30f && overallFitness < 40f)
+        if (timeSinceStart > 20f && overallFitness < 40f)
         {
-            Reset();
+            Death();
         }
-        if(overallFitness >= 1000f)
+        if (overallFitness >= 1000f)
         {
-            Reset();
+            Death();
         }
     }
 
@@ -118,7 +125,6 @@ public class IndividualController : MonoBehaviour
         {
             aSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("a: " + aSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, b, 2.5f, obstacleLayerMask);
@@ -126,7 +132,6 @@ public class IndividualController : MonoBehaviour
         {
             bSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("b: " + bSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, c, 2.5f, obstacleLayerMask);
@@ -134,7 +139,6 @@ public class IndividualController : MonoBehaviour
         {
             cSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("c: " + cSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, d, 2.5f, obstacleLayerMask);
@@ -142,7 +146,6 @@ public class IndividualController : MonoBehaviour
         {
             dSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("d: " + dSensor);
         }
 
         hit = Physics2D.Raycast(transform.position, e, 2.5f, obstacleLayerMask);
@@ -150,7 +153,6 @@ public class IndividualController : MonoBehaviour
         {
             eSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log("e: " + eSensor);
         }
     }
 

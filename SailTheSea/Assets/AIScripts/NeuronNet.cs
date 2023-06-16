@@ -63,6 +63,50 @@ public class NeuronNet : MonoBehaviour
 
         RandomiseWeights();
     }
+    public NeuronNet InitialiseCopy(int hiddenLayerCount, int hiddenNeuronCount)
+    {
+        NeuronNet n = new NeuronNet();
+
+        List<Matrix<float>> newWeights = new List<Matrix<float>>();
+
+        for (int i = 0; i < this.weights.Count; i++)
+        {
+            Matrix<float> currentWeight = Matrix<float>.Build.Dense(weights[i].RowCount, weights[i].ColumnCount);
+
+            for(int x = 0; x < currentWeight.RowCount; x++)
+            {
+                for (int y = 0; y < currentWeight.ColumnCount; y++)
+                {
+                    currentWeight[x, y] = weights[i][x, y];
+                }
+            }
+
+            newWeights.Add(currentWeight);
+        }
+
+        List<float> newBiases = new List<float>();
+
+        newBiases.AddRange(biases);
+
+        n.weights = newWeights;
+        n.biases = newBiases;
+
+        n.InitialiseHidden(hiddenLayerCount, hiddenNeuronCount);
+
+        return n;
+    }
+    public void InitialiseHidden(int hiddenLatyerCount, int hiddenNeuronCount)
+    {
+        inputLayer.Clear();
+        hiddenLayers.Clear();
+        outputLayer.Clear();
+
+        for (int i = 0; i < hiddenLatyerCount + 1; i++)
+        {
+            Matrix<float> newHiddenLayer = Matrix<float>.Build.Dense(1, hiddenNeuronCount);
+            hiddenLayers.Add(newHiddenLayer);
+        }
+    }
     public void RandomiseWeights()
     {
         for(int i = 0; i < weights.Count; i++)
