@@ -49,9 +49,9 @@ public class BoatMovement : MonoBehaviour
 
     [SerializeField] private TrailRenderer tr;
 
-    Vector2 movement;
-
+    Vector2 movement;     
     
+
 
     void Start()
     {
