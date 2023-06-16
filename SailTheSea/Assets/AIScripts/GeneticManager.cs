@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 
 public class GeneticManager : MonoBehaviour
 {
-
     [Header("References")]
     public IndividualController controller;
 
@@ -35,29 +34,34 @@ public class GeneticManager : MonoBehaviour
     {
         CreatePopulation();
     }
+
     private void CreatePopulation()
     {
         population = new NeuronNet[initialPopulation];
-        FillPopulationWithRandiomValues(population, 0);
+        FillPopulationWithRandomValues(population, 0);
         ResetToCurrentGenome();
     }
+
     private void ResetToCurrentGenome()
     {
         controller.ResetWithNetwork(population[currentGenome]);
     }
-    private void FillPopulationWithRandiomValues(NeuronNet[] newPopulation, int startingIndex)
+
+    private void FillPopulationWithRandomValues(NeuronNet[] newPopulation, int startingIndex)
     {
-        while(startingIndex < initialPopulation)
+        while (startingIndex < initialPopulation)
         {
-            newPopulation[startingIndex] = new NeuronNet();
-            newPopulation[startingIndex].Initialise(controller.Layers, controller.Neurons);
+            GameObject obj = new GameObject("NeuronNet");
+            NeuronNet neuronNet = obj.AddComponent<NeuronNet>();
+            neuronNet.Initialise(controller.Layers, controller.Neurons);
+            newPopulation[startingIndex] = neuronNet;
             startingIndex++;
         }
     }
+
     public void Death(float fitness, NeuronNet network)
     {
-
-        if(currentGenome < population.Length - 1)
+        if (currentGenome < population.Length - 1)
         {
             population[currentGenome].fitness = fitness;
             currentGenome++;
@@ -69,7 +73,8 @@ public class GeneticManager : MonoBehaviour
             RePopulate();
         }
     }
-    private void  RePopulate()
+
+    private void RePopulate()
     {
         genePool.Clear();
         currentGeneration++;
@@ -81,37 +86,32 @@ public class GeneticManager : MonoBehaviour
         Crossover(newPopulation);
         Mutate(newPopulation);
 
-        FillPopulationWithRandiomValues(newPopulation, naturallySelected);
+        FillPopulationWithRandomValues(newPopulation, naturallySelected);
 
         population = newPopulation;
         currentGenome = 0;
         ResetToCurrentGenome();
     }
+
     private void Mutate(NeuronNet[] newPopulation)
     {
-
         for (int i = 0; i < naturallySelected; i++)
         {
-
             for (int c = 0; c < newPopulation[i].weights.Count; c++)
             {
-
                 if (Random.Range(0.0f, 1.0f) < mutationRate)
                 {
                     newPopulation[i].weights[c] = MutateMatrix(newPopulation[i].weights[c]);
                 }
-
             }
-
         }
-
     }
-    Matrix<float> MutateMatrix(Matrix<float> A)
-    {
 
+    private Matrix<float> MutateMatrix(Matrix<float> A)
+    {
         int randomPoints = Random.Range(1, (A.RowCount * A.ColumnCount) / 7);
 
-        Matrix<float> C = A;
+        Matrix<float> C = A.Clone();
 
         for (int i = 0; i < randomPoints; i++)
         {
@@ -122,17 +122,16 @@ public class GeneticManager : MonoBehaviour
         }
 
         return C;
-
     }
 
     private void Crossover(NeuronNet[] newPopulation)
     {
-        for (int i = 0; i < numberToCrossover; i+=2)
+        for (int i = 0; i < numberToCrossover; i += 2)
         {
             int AIndex = i;
             int BIndex = i + 1;
 
-            if(genePool.Count >= 1)
+            if (genePool.Count >= 1)
             {
                 for (int l = 0; l < 100; l++)
                 {
@@ -165,6 +164,7 @@ public class GeneticManager : MonoBehaviour
                     Child1.weights[w] = population[BIndex].weights[w];
                 }
             }
+
             for (int w = 0; w < Child1.biases.Count; w++)
             {
                 if (Random.Range(0.0f, 1.0f) < 0.5f)
@@ -178,6 +178,7 @@ public class GeneticManager : MonoBehaviour
                     Child1.biases[w] = population[BIndex].biases[w];
                 }
             }
+
             newPopulation[naturallySelected] = Child1;
             naturallySelected++;
 
@@ -185,6 +186,7 @@ public class GeneticManager : MonoBehaviour
             naturallySelected++;
         }
     }
+
     private NeuronNet[] PickBestPopulation()
     {
         NeuronNet[] newPopulation = new NeuronNet[initialPopulation];
@@ -194,7 +196,7 @@ public class GeneticManager : MonoBehaviour
             newPopulation[naturallySelected] = population[i].InitialiseCopy(controller.Layers, controller.Neurons);
             newPopulation[naturallySelected].fitness = 0;
             naturallySelected++;
-          
+
             int f = Mathf.RoundToInt(population[i].fitness * 10);
 
             for (int c = 0; c < f; c++)
@@ -208,7 +210,6 @@ public class GeneticManager : MonoBehaviour
             int last = population.Length - 1;
             last -= i;
 
-
             int f = Mathf.RoundToInt(population[last].fitness * 10);
 
             for (int c = 0; c < f; c++)
@@ -216,8 +217,10 @@ public class GeneticManager : MonoBehaviour
                 genePool.Add(last);
             }
         }
+
         return newPopulation;
     }
+
     private void SortPopulation()
     {
         for (int i = 0; i < population.Length; i++)
