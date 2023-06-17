@@ -68,7 +68,7 @@ public class IndividualController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Wall"))
         {
             Death();
             obstacleSpawner.ResetSpawner();
@@ -97,7 +97,7 @@ public class IndividualController : MonoBehaviour
         totalTimeSurvived += Time.deltaTime;
         overallFitness = (totalTimeSurvived * avgTimeMultiplier) + ((((2 * aSensor) + bSensor + cSensor + dSensor + eSensor) / 6) * sensorMultiplier);
 
-        if (timeSinceStart > 20f && overallFitness < 40f)
+        if (timeSinceStart > 20f && overallFitness < 20f)
         {
             Death();
         }
@@ -128,7 +128,7 @@ public class IndividualController : MonoBehaviour
         }
 
         hit = Physics2D.Raycast(transform.position, b, 2.5f, obstacleLayerMask);
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.CompareTag("Obstacle"))
         {
             bSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
@@ -142,7 +142,7 @@ public class IndividualController : MonoBehaviour
         }
 
         hit = Physics2D.Raycast(transform.position, d, 2.5f, obstacleLayerMask);
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.CompareTag("Obstacle"))
         {
             dSensor = hit.distance / 2f;
             Debug.DrawLine(transform.position, hit.point, Color.red);
