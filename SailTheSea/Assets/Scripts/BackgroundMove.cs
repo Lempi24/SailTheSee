@@ -12,7 +12,7 @@ public class BackgroundMove : MonoBehaviour
         StartPosition = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
         time += Time.deltaTime;
