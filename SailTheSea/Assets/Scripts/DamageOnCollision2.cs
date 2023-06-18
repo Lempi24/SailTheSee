@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class DamageOnCollision2 : MonoBehaviour
 {
@@ -23,10 +24,12 @@ public class DamageOnCollision2 : MonoBehaviour
             if (!hasShieldActive)
             {
                 playerHealth.TakeDamage(1);
+                CameraShaker.Instance.ShakeOnce(1.5f, 1.5f, .1f, 1f);
            
             if (!boatMovement.isShipBlinking)
         {
             StartCoroutine(boatMovement.StartShipBlinkCoroutine());
+            CameraShaker.Instance.ShakeOnce(1.5f, 1.5f, .1f, 1f);
         }
             }
             else if (hasShieldActive || isShieldBlinking)
