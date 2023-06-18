@@ -127,7 +127,7 @@ public class BoatMovement : MonoBehaviour
     {
         if (!PauseMenu.isPaused)
         {
-            if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive)
+            if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive &&!isShipBlinking)
             {
                 StartCoroutine(ActivateShield());
             }

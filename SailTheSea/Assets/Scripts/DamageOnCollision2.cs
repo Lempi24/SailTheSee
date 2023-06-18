@@ -24,12 +24,12 @@ public class DamageOnCollision2 : MonoBehaviour
             if (!hasShieldActive)
             {
                 playerHealth.TakeDamage(1);
-                CameraShaker.Instance.ShakeOnce(1.5f, 1.5f, .1f, 1f);
+                CameraShaker.Instance.ShakeOnce(1f, 5f, .1f, 1f);
            
             if (!boatMovement.isShipBlinking)
         {
             StartCoroutine(boatMovement.StartShipBlinkCoroutine());
-            CameraShaker.Instance.ShakeOnce(1.5f, 1.5f, .1f, 1f);
+            CameraShaker.Instance.ShakeOnce(1f, 5f, .1f, 1f);
         }
             }
             else if (hasShieldActive || isShieldBlinking)
