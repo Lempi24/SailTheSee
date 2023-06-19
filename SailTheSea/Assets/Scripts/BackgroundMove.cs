@@ -21,7 +21,7 @@ public class BackgroundMove : MonoBehaviour
             StartPosition.y = 13.91f;
             transform.position = StartPosition;
         }
-        if (time > 30f && speed < 12f)
+        else if (time > 10f && speed < 12f)
         {
             speed += 0.1f;
             time = 0f;
