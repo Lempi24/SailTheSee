@@ -6,7 +6,7 @@ public class RandomSpawner : MonoBehaviour
 {
     public Transform[] spawnPoints;
     public GameObject[] spawnPrefabs;
-    public float spawnInterval = 1f;
+    public float spawnInterval = 2f;
     public int spawnNumber = 5;
     private float timer = 0f;
     private float CountdownTime = 0f;
@@ -29,7 +29,7 @@ public class RandomSpawner : MonoBehaviour
         {
             spawnInterval = 0.5f;
         }
-        if (period > 3f)
+        if (period > 10f)
         {
             spawnInterval -= 0.1f;
             period = 0;
