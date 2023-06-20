@@ -5,6 +5,7 @@ using EZCameraShake;
 
 public class DamageOnCollision2 : MonoBehaviour
 {
+    [SerializeField] private AudioSource Uderzenie;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -23,6 +24,7 @@ public class DamageOnCollision2 : MonoBehaviour
            
             if (!hasShieldActive)
             {
+                Uderzenie.Play();
                 playerHealth.TakeDamage(1);
                 CameraShaker.Instance.ShakeOnce(1f, 5f, .1f, 1f);
            

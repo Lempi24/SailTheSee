@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
-{
+{    
     public static event Action OnPlayerDamaged;
     public static event Action OnPlayerDeath;
 
@@ -30,10 +30,11 @@ public class PlayerHealth : MonoBehaviour
         }
         
         if(health <=0)
-        {
+        {            
             health = 0;
-            Destroy(gameObject);
+            Destroy(gameObject);            
             OnPlayerDeath?.Invoke();
+            
         }
     }
 }

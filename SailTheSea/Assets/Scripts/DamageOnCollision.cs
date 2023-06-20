@@ -4,6 +4,7 @@ using UnityEngine;
 using EZCameraShake;
 public class DamageOnCollision : MonoBehaviour
 {
+    [SerializeField] private AudioSource dzwiekUderzenia;
     
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -24,6 +25,7 @@ public class DamageOnCollision : MonoBehaviour
             
             if (!hasShieldActive)
             {
+                dzwiekUderzenia.Play();
                 playerHealth.TakeDamage(3);
                 CameraShaker.Instance.ShakeOnce(3f, 9f, .1f, 1f);
 

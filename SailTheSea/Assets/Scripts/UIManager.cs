@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public GameObject gameOverMenu;
+    [SerializeField] private AudioSource smierc;
 
     private void OnEnable()
     {
-        PlayerHealth.OnPlayerDeath += EnableGameOverMenu;
+        PlayerHealth.OnPlayerDeath += EnableGameOverMenu;        
     }
+
 
     private void OnDisable()
     {
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour
     public void EnableGameOverMenu()
     {
         gameOverMenu.SetActive(true);
+        smierc.Play();
     }
 
     public void QuitToMenu()

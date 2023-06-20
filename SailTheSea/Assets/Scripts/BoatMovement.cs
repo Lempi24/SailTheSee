@@ -10,6 +10,9 @@ public class BoatMovement : MonoBehaviour
     public Animator animator;
     private bool canAnimate = false;
 
+    [SerializeField] private AudioSource tarcza;
+    [SerializeField] private AudioSource dash;
+
     // Shield
     [SerializeField]
     private GameObject shield;
@@ -97,6 +100,7 @@ public class BoatMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
             {
+                dash.Play();
                 dashCooldownTimer = dashingCooldown;
                 dashCooldownSlider.value = 0f;
                 StartCoroutine(Dash());
@@ -129,6 +133,7 @@ public class BoatMovement : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.R) && canActivateShield && !isShieldActive &&!isShipBlinking)
             {
+                tarcza.Play();
                 StartCoroutine(ActivateShield());
             }
         }
