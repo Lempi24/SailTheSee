@@ -15,12 +15,15 @@ public class IndividualController : MonoBehaviour
     private PossibleMoves possibleMoves;
 
     public int spawnIndex;
+    List<int> allValues = new List<int>();
+    List<int> selectedValues = new List<int>();
+    private int selectedIndex = 0;
     private void Start()
     {
+        ReadTextFile("PlayerCurrentIndex.txt");
         obstacleSpawner = FindObjectOfType<ObstacleSpawnerAI>();
         possibleMoves = FindObjectOfType<PossibleMoves>();
         UpdateMove();
-        ReadTextFile("PlayerCurrentIndex.txt");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -28,6 +31,7 @@ public class IndividualController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             obstacleSpawner.ResetSpawner();
+            selectedIndex = 0;
             UpdateMove();
         }
     }
@@ -41,7 +45,7 @@ public class IndividualController : MonoBehaviour
             string fileContents = File.ReadAllText(filePath);
             string[] values = fileContents.Split(',');
 
-            List<int> allValues = new List<int>();
+            
             for (int i = 0; i < values.Length; i++)
             {
                 if (int.TryParse(values[i], out int intValue))
@@ -50,7 +54,7 @@ public class IndividualController : MonoBehaviour
                 }
             }
 
-            List<int> selectedValues = new List<int>();
+            
             for (int i = 0; i < allValues.Count; i += 4)
             {
                 if (i < allValues.Count)
@@ -59,11 +63,7 @@ public class IndividualController : MonoBehaviour
                 }
             }
 
-            Debug.Log("Selected Values:");
-            foreach (int value in selectedValues)
-            {
-                Debug.Log(value);
-            }
+            
         }
         else
         {
@@ -72,11 +72,22 @@ public class IndividualController : MonoBehaviour
     }
     public void UpdateMove()
     {
-        int randomSpawnIndex = Random.Range(0, spawnPoints.Length);
-        spawnIndex = randomSpawnIndex;
-        Debug.Log("Spawn index to: " + spawnIndex);
-        Transform randomSpawnPoint = spawnPoints[randomSpawnIndex];
-        possibleMoves.MovePlayer(randomSpawnPoint);
+        if(selectedIndex < selectedValues.Count)
+        {
+            int value = selectedValues[selectedIndex];
+            spawnIndex = value;
+            Transform ValueV = spawnPoints[value];
+            selectedIndex++;
+            possibleMoves.MovePlayer(ValueV);
+        }
+        else
+        {
+            int randomSpawnIndex = Random.Range(0, spawnPoints.Length);
+            spawnIndex = randomSpawnIndex;
+            Debug.Log("Spawn index to: " + spawnIndex);
+            Transform randomSpawnPoint = spawnPoints[randomSpawnIndex];
+            possibleMoves.MovePlayer(randomSpawnPoint);
+        }
         CancelInvoke();
     }
 }
