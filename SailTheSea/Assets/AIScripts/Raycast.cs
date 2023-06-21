@@ -8,14 +8,14 @@ public class Raycast : MonoBehaviour
     public float raycastDistance = 10f;
     public LayerMask layerMask;
     public Color rayColor = Color.red;
-    public float saveDelay = 1f; // OpóŸnienie (w sekundach) przed kolejnym zapisem
+    public float saveDelay = 1f;
 
-    private PossibleMoves possibleMoves;
+    private IndividualController controller;
     private bool hasSavedIndex = false;
 
     private void Start()
     {
-        possibleMoves = FindObjectOfType<PossibleMoves>();
+        controller = FindObjectOfType<IndividualController>();
     }
 
     private void Update()
@@ -28,12 +28,12 @@ public class Raycast : MonoBehaviour
         {
             if (!hasSavedIndex)
             {
-                int playerCurrentIndex = possibleMoves.spawnIndex;
+                int playerCurrentIndex = controller.spawnIndex;
                 Debug.Log(playerCurrentIndex);
                 SavePlayerCurrentIndex(playerCurrentIndex);
                 hasSavedIndex = true;
 
-                Invoke("ResetSaveFlag", saveDelay); // Wywo³anie funkcji ResetSaveFlag() po okreœlonym opóŸnieniu
+                Invoke("ResetSaveFlag", saveDelay); 
             }
         }
 
@@ -43,12 +43,12 @@ public class Raycast : MonoBehaviour
         {
             if (!hasSavedIndex)
             {
-                int playerCurrentIndex = possibleMoves.spawnIndex;
+                int playerCurrentIndex = controller.spawnIndex;
                 Debug.Log(playerCurrentIndex);
                 SavePlayerCurrentIndex(playerCurrentIndex);
                 hasSavedIndex = true;
 
-                Invoke("ResetSaveFlag", saveDelay); // Wywo³anie funkcji ResetSaveFlag() po okreœlonym opóŸnieniu
+                Invoke("ResetSaveFlag", saveDelay);
             }
         }
 
@@ -58,18 +58,19 @@ public class Raycast : MonoBehaviour
 
     private void SavePlayerCurrentIndex(int index)
     {
-        string filePath = "PlayerCurrentIndex.txt";
+        string fileName = "PlayerCurrentIndex.txt";
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
-        // Sprawdzanie czy plik istnieje
+      
         if (!File.Exists(filePath))
         {
-            // Tworzenie pliku jeœli nie istnieje
+          
             File.WriteAllText(filePath, index.ToString());
         }
         else
         {
-            // Dopisywanie wartoœci do pliku
-            File.AppendAllText(filePath, "\n" + index.ToString());
+            
+            File.AppendAllText(filePath, index.ToString() + ",");
         }
 
         Debug.Log("PlayerCurrentIndex saved to file.");
