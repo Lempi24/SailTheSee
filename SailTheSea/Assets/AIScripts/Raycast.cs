@@ -21,7 +21,6 @@ public class Raycast : MonoBehaviour
 
     private void Update()
     {
-        
         Vector2 raycastOrigin = transform.position;
 
         Vector2 raycastDirectionRight = transform.right;
@@ -32,13 +31,14 @@ public class Raycast : MonoBehaviour
             {
                 int playerCurrentIndex = controller.spawnIndex;
                 Debug.Log(playerCurrentIndex);
+                controller.selectedIndexRay++;
                 SavePlayerCurrentIndex(playerCurrentIndex);
                 hasSavedIndex = true;
-
                 Invoke("ResetSaveFlag", saveDelay);
                 controller.Invoke("UpdateMove", 1);
             }
         }
+
         Vector2 raycastDirectionLeft = -transform.right;
         RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigin, raycastDirectionLeft, raycastDistance, layerMask);
         if (hitLeft.collider != null && hitLeft.collider.CompareTag("Player"))
@@ -47,12 +47,11 @@ public class Raycast : MonoBehaviour
             {
                 int playerCurrentIndex = controller.spawnIndex;
                 Debug.Log(playerCurrentIndex);
+                controller.selectedIndexRay++;
                 SavePlayerCurrentIndex(playerCurrentIndex);
                 hasSavedIndex = true;
-
                 Invoke("ResetSaveFlag", saveDelay);
                 controller.Invoke("UpdateMove", 1);
-
             }
         }
 
@@ -65,19 +64,17 @@ public class Raycast : MonoBehaviour
         string fileName = "PlayerCurrentIndex.txt";
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
-      
-        if (!File.Exists(filePath))
+        if (controller.allValues.Count < controller.selectedIndexRay)
         {
-          
-            File.WriteAllText(filePath, index.ToString());
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, index.ToString());
+            }
+            else
+            {
+                File.AppendAllText(filePath, index.ToString() + ",");
+            }
         }
-        else
-        {
-            
-            File.AppendAllText(filePath, index.ToString() + ",");
-        }
-
-        
     }
 
     private void ResetSaveFlag()
