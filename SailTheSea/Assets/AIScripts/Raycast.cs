@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Unity.VisualScripting;
 
 public class Raycast : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Raycast : MonoBehaviour
 
     private void Update()
     {
+        
         Vector2 raycastOrigin = transform.position;
 
         Vector2 raycastDirectionRight = transform.right;
@@ -33,10 +35,10 @@ public class Raycast : MonoBehaviour
                 SavePlayerCurrentIndex(playerCurrentIndex);
                 hasSavedIndex = true;
 
-                Invoke("ResetSaveFlag", saveDelay); 
+                Invoke("ResetSaveFlag", saveDelay);
+                controller.Invoke("UpdateMove", 1);
             }
         }
-
         Vector2 raycastDirectionLeft = -transform.right;
         RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigin, raycastDirectionLeft, raycastDistance, layerMask);
         if (hitLeft.collider != null && hitLeft.collider.CompareTag("Player"))
@@ -49,6 +51,8 @@ public class Raycast : MonoBehaviour
                 hasSavedIndex = true;
 
                 Invoke("ResetSaveFlag", saveDelay);
+                controller.Invoke("UpdateMove", 1);
+
             }
         }
 
@@ -73,7 +77,7 @@ public class Raycast : MonoBehaviour
             File.AppendAllText(filePath, index.ToString() + ",");
         }
 
-        Debug.Log("PlayerCurrentIndex saved to file.");
+        
     }
 
     private void ResetSaveFlag()

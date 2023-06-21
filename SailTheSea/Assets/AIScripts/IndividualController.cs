@@ -77,5 +77,6 @@ public class IndividualController : MonoBehaviour
         Debug.Log("Spawn index to: " + spawnIndex);
         Transform randomSpawnPoint = spawnPoints[randomSpawnIndex];
         possibleMoves.MovePlayer(randomSpawnPoint);
+        CancelInvoke();
     }
 }
