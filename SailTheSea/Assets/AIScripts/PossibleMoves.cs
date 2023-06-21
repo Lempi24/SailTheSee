@@ -20,7 +20,7 @@ public class PossibleMoves : MonoBehaviour
         MovePlayer(randomSpawnPoint);
     }
 
-    private void MovePlayer(Transform spawnPoint)
+    public void MovePlayer(Transform spawnPoint)
     {
         playerPrefab.transform.position = spawnPoint.position;
         playerPrefab.transform.rotation = spawnPoint.rotation;
