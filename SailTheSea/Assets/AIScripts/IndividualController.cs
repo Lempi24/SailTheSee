@@ -64,7 +64,7 @@ public class IndividualController : MonoBehaviour
                 }
             }
 
-            for (int i = 0; i < allValues.Count; i += 8)
+            for (int i = 0; i < allValues.Count; i += 6)
             {
                 if (i < allValues.Count)
                 {
