@@ -11,15 +11,12 @@ public class ObstacleSpawnerAI : MonoBehaviour
     private int spawnIndex;
     private bool resetSpawner;
 
-    
-
     private void Start()
     {
         spawnIndex = 0;
         resetSpawner = false;
         InvokeRepeating("SpawnObjects", 0f, 3f);
     }
-
 
     public void ResetSpawner()
     {
@@ -31,7 +28,6 @@ public class ObstacleSpawnerAI : MonoBehaviour
             if (spawnedObject.name == objectToSpawn.name + "(Clone)")
             {
                 Destroy(spawnedObject);
-                
             }
         }
     }
@@ -43,28 +39,26 @@ public class ObstacleSpawnerAI : MonoBehaviour
             spawnIndex = 0;
         }
 
-        for (int i = 0; i < 5; i++)
+        int objectsToSpawn = Mathf.Min(4, spawnIndexes.Length - spawnIndex);
+
+        for (int i = 0; i < objectsToSpawn; i++)
         {
             int currentIndex = spawnIndex + i;
+            int spawnPointIndex = spawnIndexes[currentIndex];
 
-            if (currentIndex >= spawnIndexes.Length)
+            if (spawnPointIndex >= 0 && spawnPointIndex < spawnPoints.Length)
             {
-                break;
+                Instantiate(objectToSpawn, spawnPoints[spawnPointIndex].position, Quaternion.identity);
             }
-
-            if (spawnIndexes[currentIndex] >= spawnPoints.Length)
-            {
-                continue;
-            }
-
-            Instantiate(objectToSpawn, spawnPoints[spawnIndexes[currentIndex]].position, Quaternion.identity);
         }
 
-        spawnIndex += 5;
+        spawnIndex += objectsToSpawn;
     }
 
     public void TriggerSpawnerReset()
     {
         resetSpawner = true;
     }
+
+
 }
