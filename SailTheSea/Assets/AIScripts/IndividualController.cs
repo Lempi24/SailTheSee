@@ -64,7 +64,7 @@ public class IndividualController : MonoBehaviour
                 }
             }
 
-            for (int i = 0; i < allValues.Count; i += 4)
+            for (int i = 0; i < allValues.Count; i += 8)
             {
                 if (i < allValues.Count)
                 {
@@ -98,7 +98,6 @@ public class IndividualController : MonoBehaviour
             selectedIndex++;
             possibleMoves.MovePlayer(randomSpawnPoint);
         }
-
         CancelInvoke();
     }
 }

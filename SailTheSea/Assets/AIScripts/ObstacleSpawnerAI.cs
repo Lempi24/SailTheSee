@@ -10,7 +10,6 @@ public class ObstacleSpawnerAI : MonoBehaviour
 
     private int spawnIndex;
     private bool resetSpawner;
-
     private void Start()
     {
         spawnIndex = 0;
@@ -39,7 +38,7 @@ public class ObstacleSpawnerAI : MonoBehaviour
             spawnIndex = 0;
         }
 
-        int objectsToSpawn = Mathf.Min(4, spawnIndexes.Length - spawnIndex);
+        int objectsToSpawn = Mathf.Min(8, spawnIndexes.Length - spawnIndex);
 
         for (int i = 0; i < objectsToSpawn; i++)
         {
