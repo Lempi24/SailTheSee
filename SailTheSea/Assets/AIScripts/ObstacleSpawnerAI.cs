@@ -38,11 +38,10 @@ public class ObstacleSpawnerAI : MonoBehaviour
 14, 5, 13, 1, 4, 8, 2, 11,
 6, 9, 3, 12, 7, 10, 14, 5,
 13, 1, 4, 8, 2, 11, 6, 9,
-3, 12, 7, 10, };
-    public int SpawnReset = 0;
+3, 12, 7, 10};
 
     private int spawnIndex;
-    private bool resetSpawner;
+    public bool resetSpawner;
     private void Start()
     {
         spawnIndex = 0;
@@ -52,6 +51,7 @@ public class ObstacleSpawnerAI : MonoBehaviour
 
     public void ResetSpawner()
     {
+        //Jak nazwa wskazuje reset spawnera....
         spawnIndex = 0;
         resetSpawner = false;
         GameObject[] spawnedObjects = GameObject.FindGameObjectsWithTag("Obstacle");
@@ -62,11 +62,12 @@ public class ObstacleSpawnerAI : MonoBehaviour
                 Destroy(spawnedObject);
             }
         }
-        SpawnReset = 1;
+        
     }
 
     private void SpawnObjects()
     {
+        //Spawnowanie obiektów....Duh....
         if (spawnIndex >= spawnIndexes.Length)
         {
             spawnIndex = 0;

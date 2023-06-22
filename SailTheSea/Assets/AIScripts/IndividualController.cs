@@ -36,6 +36,7 @@ public class IndividualController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            //Resetujemy index do czytania obocnego po³o¿enia przy kolizji z obiektem, czyli nie powodzenie. Reset spawnera i otwarcie ponowne zmodyfikowanego(lub nie XD) pliku tekstowego
             obstacleSpawner.ResetSpawner();
             ReadTextFile("PlayerCurrentIndex.txt");
             selectedIndex = 0;
@@ -46,6 +47,7 @@ public class IndividualController : MonoBehaviour
 
     private void ReadTextFile(string fileName)
     {
+        //Czytanie pliku zewnêtrznego 
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
         if (File.Exists(filePath))
@@ -73,14 +75,14 @@ public class IndividualController : MonoBehaviour
             }
         }
         else
-        {
+        {   //Jak nie ma pliku to b³¹d :c
             Debug.LogError("File not found at path: " + filePath);
         }
     }
 
     public void UpdateMove()
     {
-
+        //Je¿eli liczba wybranych indexów jest mniejsza od wielkoœci listy zawieraj¹cej prawdziw¹ listê bezpiecznych punktów ma czytaæ po³o¿enie z pliku
         if (selectedIndex < selectedValues.Count)
         {
             int value = selectedValues[selectedIndex];
@@ -90,7 +92,7 @@ public class IndividualController : MonoBehaviour
             possibleMoves.MovePlayer(ValueV);
         }
         else
-        {
+        { //W innym przypadku losuje nastêpne po³o¿enie, poniewa¿ nie wie gdzie jest w danej fali bezpieczna pozycja
             int randomSpawnIndex = Random.Range(0, spawnPoints.Length);
             spawnIndex = randomSpawnIndex;
             Debug.Log("Spawn index to: " + spawnIndex);

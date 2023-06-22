@@ -22,11 +22,12 @@ public class Raycast : MonoBehaviour
     private void Update()
     {
         Vector2 raycastOrigin = transform.position;
-
+        //Raycast w prawo
         Vector2 raycastDirectionRight = transform.right;
         RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigin, raycastDirectionRight, raycastDistance, layerMask);
         if (hitRight.collider != null && hitRight.collider.CompareTag("Player"))
         {
+            //Jesli raycast obiektu trafi w Playera i dany index nie zosta³ ju¿ wczeœniej zapisany to zapisuje siê index do pliku
             if (!hasSavedIndex)
             {
                 int playerCurrentIndex = controller.spawnIndex;
@@ -38,7 +39,7 @@ public class Raycast : MonoBehaviour
                 controller.Invoke("UpdateMove", 1);
             }
         }
-
+        //Raycast w lewo
         Vector2 raycastDirectionLeft = -transform.right;
         RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigin, raycastDirectionLeft, raycastDistance, layerMask);
         if (hitLeft.collider != null && hitLeft.collider.CompareTag("Player"))
@@ -54,7 +55,7 @@ public class Raycast : MonoBehaviour
                 controller.Invoke("UpdateMove", 1);
             }
         }
-
+        
         Debug.DrawLine(raycastOrigin, raycastOrigin + raycastDirectionRight * raycastDistance, rayColor);
         Debug.DrawLine(raycastOrigin, raycastOrigin + raycastDirectionLeft * raycastDistance, rayColor);
     }
@@ -63,7 +64,7 @@ public class Raycast : MonoBehaviour
     {
         string fileName = "PlayerCurrentIndex.txt";
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
-
+        //Zapisywanie do pliku jeœli zabraknie mu danych o danej fali
         if (controller.allValues.Count < controller.selectedIndexRay)
         {
             if (!File.Exists(filePath))
